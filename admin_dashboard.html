@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title data-lang="title">Admin Dashboard</title>
+
+<style>
+body { font-family: Arial; background: #f4f6f8; padding: 20px; }
+button { padding: 8px 14px; margin: 5px; cursor: pointer; }
+.active { background: green; color: white; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+th { background: #e8f5e9; }
+img { border-radius: 50%; object-fit: cover; }
+</style>
+</head>
+
+<body>
+
+<h2 data-lang="heading">Admin Dashboard</h2>
+
+<button class="tab-button active" data-type="pending" data-lang="pending_btn">Pending Doctors</button>
+<button class="tab-button" data-type="approved" data-lang="approved_btn">Approved Doctors</button>
+<button class="tab-button" data-type="rejected" data-lang="rejected_btn">Rejected Doctors</button>
+
+<table>
+<thead>
+<tr>
+  <th data-lang="email">Email</th>
+  <th data-lang="name">Name</th>
+  <th data-lang="regno">Reg No</th>
+  <th data-lang="spec">Specialization</th>
+  <th data-lang="cert">Certificate</th>
+  <th data-lang="photo">Photo</th>
+  <th data-lang="action">Action</th>
+</tr>
+</thead>
+<tbody id="tableBody">
+<tr><td colspan="7" data-lang="loading">Loading...</td></tr>
+</tbody>
+</table>
+
+<script>
+/* ================= LANGUAGE ================= */
+const translations = {
+  en: {
+    title: "Admin Dashboard",
+    heading: "Admin Dashboard",
+    pending_btn: "Pending Doctors",
+    approved_btn: "Approved Doctors",
+    rejected_btn: "Rejected Doctors",
+    email: "Email",
+    name: "Name",
+    regno: "Reg No",
+    spec: "Specialization",
+    cert: "Certificate",
+    photo: "Photo",
+    action: "Action",
+    approve: "Approve",
+    reject: "Reject",
+    loading: "Loading...",
+    norecords: "No records",
+    approved_msg: "✅ Doctor Approved & email sent",
+    rejected_msg: "❌ Doctor Rejected",
+    reason: "Reason?",
+    error: "❌ Something went wrong"
+  },
+  kn: {
+    title: "ನಿರ್ವಹಣಾ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    heading: "ನಿರ್ವಹಣಾ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    pending_btn: "ಬಾಕಿ ವೈದ್ಯರು",
+    approved_btn: "ಅನುಮೋದಿತ ವೈದ್ಯರು",
+    rejected_btn: "ನಿರಾಕರಿಸಲಾದ ವೈದ್ಯರು",
+    email: "ಇಮೇಲ್",
+    name: "ಹೆಸರು",
+    regno: "ನೋಂದಣಿ ಸಂಖ್ಯೆ",
+    spec: "ವಿಶೇಷತೆ",
+    cert: "ಪ್ರಮಾಣಪತ್ರ",
+    photo: "ಫೋಟೋ",
+    action: "ಕ್ರಿಯೆ",
+    approve: "ಅನುಮೋದಿಸಿ",
+    reject: "ನಿರಾಕರಿಸಿ",
+    loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+    norecords: "ಯಾವುದೇ ದಾಖಲೆಗಳಿಲ್ಲ",
+    approved_msg: "✅ ವೈದ್ಯರನ್ನು ಅನುಮೋದಿಸಲಾಗಿದೆ ಮತ್ತು ಇಮೇಲ್ ಕಳುಹಿಸಲಾಗಿದೆ",
+    rejected_msg: "❌ ವೈದ್ಯರನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ",
+    reason: "ಕಾರಣ?",
+    error: "❌ ದೋಷ ಸಂಭವಿಸಿದೆ"
+  },
+  hi: {
+    title: "एडमिन डैशबोर्ड",
+    heading: "एडमिन डैशबोर्ड",
+    pending_btn: "लंबित डॉक्टर",
+    approved_btn: "स्वीकृत डॉक्टर",
+    rejected_btn: "अस्वीकृत डॉक्टर",
+    email: "ईमेल",
+    name: "नाम",
+    regno: "पंजीकरण संख्या",
+    spec: "विशेषज्ञता",
+    cert: "प्रमाणपत्र",
+    photo: "फोटो",
+    action: "कार्य",
+    approve: "स्वीकृत करें",
+    reject: "अस्वीकृत करें",
+    loading: "लोड हो रहा है...",
+    norecords: "कोई रिकॉर्ड नहीं",
+    approved_msg: "✅ डॉक्टर स्वीकृत हुए और ईमेल भेजा गया",
+    rejected_msg: "❌ डॉक्टर अस्वीकृत",
+    reason: "कारण?",
+    error: "❌ कुछ गलत हुआ"
+  },
+
+};
+
+const currentLang = localStorage.getItem("language") || "en";
+
+function applyLanguage() {
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    el.innerText = translations[currentLang][el.getAttribute("data-lang")];
+  });
+  document.title = translations[currentLang].title;
+}
+
+/* ================= API LOGIC ================= */
+const BASE_URL = "http://localhost:5000/api/admin";
+let currentTab = "pending";
+const tableBody = document.getElementById("tableBody");
+let doctorsData = { pending: [], approved: [], rejected: [] };
+
+function renderTable(type) {
+  const doctors = doctorsData[type];
+  tableBody.innerHTML = "";
+
+  if (!doctors.length) {
+    tableBody.innerHTML = `<tr><td colspan="7">${translations[currentLang].norecords}</td></tr>`;
+    return;
+  }
+
+  doctors.forEach(d => {
+    tableBody.innerHTML += `
+      <tr>
+        <td>${d.email}</td>
+        <td>${d.firstName} ${d.lastName}</td>
+        <td>${d.registrationNumber}</td>
+        <td>${d.specialization}</td>
+        <td>${d.degreeCertificates?.map((c,i)=>`<a href="http://localhost:5000/${c}" target="_blank">View ${i+1}</a>`).join("<br>") || "—"}</td>
+        <td>${d.professionalPhoto ? `<img src="http://localhost:5000/${d.professionalPhoto}" width="45">` : "—"}</td>
+        <td>
+          ${type === "pending" ? `
+            <button onclick="approve('${d._id}')">${translations[currentLang].approve}</button>
+            <button onclick="reject('${d._id}')">${translations[currentLang].reject}</button>
+          ` : "-"}
+        </td>
+      </tr>`;
+  });
+}
+
+async function loadDoctors(type) {
+  const res = await fetch(`${BASE_URL}/${type}-doctors`);
+  doctorsData[type] = await res.json();
+  if (currentTab === type) renderTable(type);
+}
+
+async function approve(id) {
+  await fetch(`${BASE_URL}/approve-doctor`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ doctorId: id })
+  });
+  alert(translations[currentLang].approved_msg);
+  loadDoctors("pending");
+  loadDoctors("approved");
+}
+
+async function reject(id) {
+  const reason = prompt(translations[currentLang].reason);
+  if (!reason) return;
+
+  await fetch(`${BASE_URL}/reject-doctor`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ doctorId: id, reason })
+  });
+  alert(translations[currentLang].rejected_msg);
+  loadDoctors("pending");
+  loadDoctors("rejected");
+}
+
+document.querySelectorAll(".tab-button").forEach(btn => {
+  btn.onclick = () => {
+    currentTab = btn.dataset.type;
+    document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderTable(currentTab);
+  };
+});
+
+/* INIT */
+applyLanguage();
+["pending","approved","rejected"].forEach(loadDoctors);
+</script>
+
+</body>
+</html>

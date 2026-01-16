@@ -1,0 +1,571 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">Lifestyle & Social History</title>
+<link rel="stylesheet" href="consult.css">
+
+<style>
+.form-buttons{display:flex;justify-content:space-between;margin-top:24px;}
+.btn-prev{padding:12px 24px;background:#e5e7eb;border:none;border-radius:6px;font-weight:600;cursor:pointer;}
+.btn-next{padding:12px 24px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;}
+.inline-options label{margin-right:20px;font-size:14px;}
+.hidden{display:none;}
+.section-title{grid-column:1/-1;font-weight:600;margin-top:14px;}
+.error{color:red;font-size:12px;}
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<!-- LOGO / TITLE -->
+<div class="page-title" data-lang="patient_registration">Patient Registration</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" data-lang="tab_personal">Personal Information</div>
+  <div class="tab active" data-lang="tab_lifestyle">Lifestyle & Social History</div>
+  <div class="tab" data-lang="tab_medical">Medical History</div>
+  <div class="tab" data-lang="tab_current">Current Health Status</div>
+  <div class="tab" data-lang="tab_psycho">Psychometric Assessment</div>
+  <div class="tab" data-lang="tab_ayush">AYUSH Profile</div>
+  <div class="tab" data-lang="tab_image">Image Capture</div>
+</div>
+
+<div class="form-card">
+  <div class="form-title" data-lang="form_title">Lifestyle & Social History</div>
+  <div class="form-subtext" data-lang="form_subtext">Please fill required fields</div>
+
+  <div class="form-grid">
+
+    <!-- Smoking -->
+    <div class="full">
+      <label data-lang="smoking_label">Smoking / Tobacco Use *</label>
+      <div class="inline-options">
+        <label><input type="radio" name="smoking" value="Yes"> <span data-lang="yes">Yes</span></label>
+        <label><input type="radio" name="smoking" value="No"> <span data-lang="no">No</span></label>
+      </div>
+      <small class="error" id="smokingError"></small>
+    </div>
+
+    <div class="full hidden" id="smokingDetails">
+      <input id="smokingFrequency" data-lang-placeholder="smoking_frequency">
+      <small class="error" id="smokingFreqError"></small>
+    </div>
+
+    <div class="full hidden" id="smokingDurationBox">
+      <input id="smokingDuration" data-lang-placeholder="smoking_duration">
+      <small class="error" id="smokingDurError"></small>
+    </div>
+
+    <!-- Addiction -->
+    <div class="full">
+      <label data-lang="addiction_label">Addiction *</label>
+      <div class="inline-options">
+        <label><input type="checkbox" class="addiction" value="Tea"> <span data-lang="tea">Tea</span></label>
+        <label><input type="checkbox" class="addiction" value="Coffee"> <span data-lang="coffee">Coffee</span></label>
+        <label><input type="checkbox" class="addiction" value="Others" id="addictionOther"> <span data-lang="others">Others</span></label>
+      </div>
+      <small class="error" id="addictionError"></small>
+    </div>
+
+    <div class="full hidden" id="addictionDetailsBox">
+      <input id="addictionDetails" data-lang-placeholder="addiction_details">
+      <small class="error" id="addictionDetailsError"></small>
+    </div>
+
+    <!-- Alcohol -->
+    <div class="section-title" data-lang="alcohol">Alcohol *</div>
+
+    <div>
+     <select id="alcoholType">
+  <option value="" data-lang="select">Select</option>
+  <option value="None" data-lang="alcohol_none">None</option>
+  <option value="Beer" data-lang="alcohol_beer">Beer</option>
+  <option value="Wine" data-lang="alcohol_wine">Wine</option>
+  <option value="Spirits" data-lang="alcohol_spirits">Spirits</option>
+</select>
+
+      <small class="error" id="alcoholTypeError"></small>
+    </div>
+
+    <div>
+      <select id="alcoholFrequency">
+  <option value="" data-lang="frequency">Frequency</option>
+  <option value="Never" data-lang="never">Never</option>
+  <option value="Occasionally" data-lang="occasionally">Occasionally</option>
+  <option value="Weekly" data-lang="weekly">Weekly</option>
+  <option value="Daily" data-lang="daily">Daily</option>
+</select>
+
+      <small class="error" id="alcoholFreqError"></small>
+    </div>
+
+    <!-- Exercise -->
+    <div class="section-title" data-lang="exercise">Exercise *</div>
+
+    <div>
+      <select id="exerciseType">
+  <option value="" data-lang="exercise_type">Select Exercise Type</option>
+  <option value="Walking" data-lang="walking">Walking</option>
+  <option value="Running" data-lang="running">Running</option>
+  <option value="Yoga" data-lang="yoga">Yoga</option>
+  <option value="Gym" data-lang="gym">Gym</option>
+  <option value="Cycling" data-lang="cycling">Cycling</option>
+  <option value="Swimming" data-lang="swimming">Swimming</option>
+  <option value="Stretching" data-lang="stretching">Stretching</option>
+  <option value="Other" data-lang="other">Other</option>
+</select>
+
+      <small class="error" id="exerciseTypeError"></small>
+    </div>
+
+    <div>
+      <select id="exerciseFrequency">
+  <option value="" data-lang="frequency">Frequency</option>
+  <option value="Never" data-lang="never">Never</option>
+  <option value="Weekly" data-lang="weekly">Weekly</option>
+  <option value="Daily" data-lang="daily">Daily</option>
+</select>
+
+      <small class="error" id="exerciseFreqError"></small>
+    </div>
+
+    <div>
+      <input id="exerciseDuration" data-lang-placeholder="exercise_duration">
+      <small class="error" id="exerciseDurError"></small>
+    </div>
+
+    <!-- Sleep -->
+    <div class="section-title" data-lang="sleep">Sleep *</div>
+
+    <div>
+      <select id="sleepHours">
+  <option value="" data-lang="hours">Hours</option>
+  <option value="4–6" data-lang="sleep_4_6">4–6</option>
+  <option value="6–8" data-lang="sleep_6_8">6–8</option>
+  <option value="8+" data-lang="sleep_8_plus">8+</option>
+</select>
+
+      <small class="error" id="sleepHoursError"></small>
+    </div>
+
+    <div>
+      <select id="sleepQuality">
+  <option value="" data-lang="quality">Quality</option>
+  <option value="Poor" data-lang="poor">Poor</option>
+  <option value="Good" data-lang="good">Good</option>
+  <option value="Excellent" data-lang="excellent">Excellent</option>
+</select>
+
+      <small class="error" id="sleepQualityError"></small>
+    </div>
+
+  </div>
+
+  <div class="form-buttons">
+    <button class="btn-prev" onclick="location.href='consult1.html'" data-lang="prev">← Previous</button>
+    <button class="btn-next" onclick="saveStep2()" data-lang="save_next">Save & Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- 🌐 TRANSLATIONS -->
+<script>
+const translations = {
+  en:{
+    page_title:"Lifestyle & Social History",
+    patient_registration:"Patient Registration",
+    tab_personal:"Personal Information",
+    tab_lifestyle:"Lifestyle & Social History",
+    tab_medical:"Medical History",
+    tab_current:"Current Health Status",
+    tab_psycho:"Psychometric Assessment",
+    tab_ayush:"AYUSH Profile",
+    tab_image:"Image Capture",
+    form_title:"Lifestyle & Social History",
+    form_subtext:"Please fill required fields",
+    smoking_label:"Smoking / Tobacco Use *",
+    yes:"Yes",
+    no:"No",
+    smoking_frequency:"Specify frequency",
+    smoking_duration:"Specify duration",
+    addiction_label:"Addiction *",
+    tea:"Tea",
+    coffee:"Coffee",
+    others:"Others",
+    addiction_details:"Specify details",
+    alcohol:"Alcohol *",
+    select: "Select",
+frequency: "Frequency",
+hours: "Hours",
+quality: "Quality",
+exercise_type: "Select Exercise Type",
+
+alcohol_none: "None",
+alcohol_beer: "Beer",
+alcohol_wine: "Wine",
+alcohol_spirits: "Spirits",
+
+never: "Never",
+occasionally: "Occasionally",
+weekly: "Weekly",
+daily: "Daily",
+
+walking: "Walking",
+running: "Running",
+yoga: "Yoga",
+gym: "Gym",
+cycling: "Cycling",
+swimming: "Swimming",
+stretching: "Stretching",
+other: "Other",
+
+sleep_4_6: "4–6",
+sleep_6_8: "6–8",
+sleep_8_plus: "8+",
+
+poor: "Poor",
+good: "Good",
+excellent: "Excellent",
+
+    frequency:"Frequency",
+    exercise:"Exercise *",
+    exercise_type:"Select Exercise Type",
+    exercise_duration:"e.g. 30 mins",
+    sleep:"Sleep *",
+    hours:"Hours",
+    quality:"Quality",
+    prev:"← Previous",
+    save_next:"Save & Next →"
+    
+  },
+  hi:{
+    page_title:"जीवनशैली और सामाजिक इतिहास",
+    patient_registration:"रोगी पंजीकरण",
+    tab_personal:"व्यक्तिगत जानकारी",
+    tab_lifestyle:"जीवनशैली और सामाजिक इतिहास",
+    tab_medical:"चिकित्सा इतिहास",
+    tab_current:"वर्तमान स्वास्थ्य स्थिति",
+    tab_psycho:"मनोवैज्ञानिक मूल्यांकन",
+    tab_ayush:"आयुष प्रोफ़ाइल",
+    tab_image:"छवि कैप्चर",
+    form_title:"जीवनशैली और सामाजिक इतिहास",
+    form_subtext:"कृपया आवश्यक फ़ील्ड भरें",
+    smoking_label:"धूम्रपान / तंबाकू उपयोग *",
+    yes:"हाँ",
+    no:"नहीं",
+    smoking_frequency:"आवृत्ति बताएं",
+    smoking_duration:"अवधि बताएं",
+    addiction_label:"लत *",
+    tea:"चाय",
+    coffee:"कॉफी",
+    others:"अन्य",
+    addiction_details:"विवरण बताएं",
+    alcohol:"शराब *",
+    select: "चयन करें",
+frequency: "आवृत्ति",
+hours: "घंटे",
+quality: "गुणवत्ता",
+exercise_type: "व्यायाम का प्रकार चुनें",
+
+alcohol_none: "कोई नहीं",
+alcohol_beer: "बीयर",
+alcohol_wine: "वाइन",
+alcohol_spirits: "मदिरा",
+
+never: "कभी नहीं",
+occasionally: "कभी-कभी",
+weekly: "साप्ताहिक",
+daily: "दैनिक",
+
+walking: "पैदल चलना",
+running: "दौड़ना",
+yoga: "योग",
+gym: "जिम",
+cycling: "साइक्लिंग",
+swimming: "तैराकी",
+stretching: "स्ट्रेचिंग",
+other: "अन्य",
+
+sleep_4_6: "4–6 घंटे",
+sleep_6_8: "6–8 घंटे",
+sleep_8_plus: "8+ घंटे",
+
+poor: "खराब",
+good: "अच्छा",
+excellent: "उत्कृष्ट",
+
+    frequency:"आवृत्ति",
+    exercise:"व्यायाम *",
+    exercise_type:"व्यायाम प्रकार चुनें",
+    exercise_duration:"जैसे 30 मिनट",
+    sleep:"नींद *",
+    hours:"घंटे",
+    quality:"गुणवत्ता",
+    prev:"← पिछला",
+    save_next:"सहेजें और आगे →",
+    required: "आवश्यक",
+  select_at_least_one: "कम से कम एक चुनें"
+  },
+  kn:{
+    page_title:"ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    patient_registration:"ರೋಗಿ ನೋಂದಣಿ",
+    tab_personal:"ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+    tab_lifestyle:"ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    tab_medical:"ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    tab_current:"ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    tab_psycho:"ಮಾನಸಿಕ ಮೌಲ್ಯಮಾಪನ",
+    tab_ayush:"ಆಯುಷ್ ಪ್ರೊಫೈಲ್",
+    tab_image:"ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+    form_title:"ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    form_subtext:"ದಯವಿಟ್ಟು ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ತುಂಬಿ",
+    smoking_label:"ಧೂಮಪಾನ / ತಂಬಾಕು ಬಳಕೆ *",
+    yes:"ಹೌದು",
+    no:"ಇಲ್ಲ",
+    smoking_frequency:"ಆವೃತ್ತಿ ಸೂಚಿಸಿ",
+    smoking_duration:"ಅವಧಿ ಸೂಚಿಸಿ",
+    addiction_label:"ಅಭ್ಯಾಸ *",
+    tea:"ಚಹಾ",
+    coffee:"ಕಾಫಿ",
+    others:"ಇತರೆ",
+    addiction_details:"ವಿವರ ಸೂಚಿಸಿ",
+    alcohol:"ಮದ್ಯ *",
+    select:"ಆಯ್ಕೆಮಾಡಿ",
+    frequency:"ಆವೃತ್ತಿ",
+    exercise:"ವ್ಯಾಯಾಮ *",
+    exercise_type:"ವ್ಯಾಯಾಮದ ಪ್ರಕಾರ ಆಯ್ಕೆಮಾಡಿ",
+    exercise_duration:"ಉದಾ: 30 ನಿಮಿಷ",
+    select: "ಆಯ್ಕೆಮಾಡಿ",
+frequency: "ಆವೃತ್ತಿ",
+hours: "ಗಂಟೆಗಳು",
+quality: "ಗುಣಮಟ್ಟ",
+exercise_type: "ವ್ಯಾಯಾಮದ ಪ್ರಕಾರ ಆಯ್ಕೆಮಾಡಿ",
+
+alcohol_none: "ಯಾವುದೂ ಇಲ್ಲ",
+alcohol_beer: "ಬಿಯರ್",
+alcohol_wine: "ವೈನ್",
+alcohol_spirits: "ಮದ್ಯ",
+
+never: "ಎಂದಿಗೂ ಇಲ್ಲ",
+occasionally: "ಕಾಲಕಾಲಕ್ಕೆ",
+weekly: "ವಾರಕ್ಕೊಮ್ಮೆ",
+daily: "ಪ್ರತಿದಿನ",
+
+walking: "ನಡೆಯುವುದು",
+running: "ಓಟ",
+yoga: "ಯೋಗ",
+gym: "ಜಿಮ್",
+cycling: "ಸೈಕ್ಲಿಂಗ್",
+swimming: "ಈಜು",
+stretching: "ಸ್ಟ್ರೆಚಿಂಗ್",
+other: "ಇತರೆ",
+
+sleep_4_6: "4–6 ಗಂಟೆಗಳು",
+sleep_6_8: "6–8 ಗಂಟೆಗಳು",
+sleep_8_plus: "8+ ಗಂಟೆಗಳು",
+
+poor: "ಕಳಪೆ",
+good: "ಉತ್ತಮ",
+excellent: "ಅತ್ಯುತ್ತಮ",
+
+    sleep:"ನಿದ್ರೆ *",
+    hours:"ಗಂಟೆಗಳು",
+    quality:"ಗುಣಮಟ್ಟ",
+    prev:"← ಹಿಂದಿನದು",
+    save_next:"ಉಳಿಸಿ ಮುಂದಕ್ಕೆ →",
+    required: "ಅಗತ್ಯ",
+  select_at_least_one: "ಕನಿಷ್ಠ ಒಂದು ಆಯ್ಕೆಮಾಡಿ"
+  }
+};
+</script>
+
+<!-- 🌐 APPLY LANGUAGE -->
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const lang = localStorage.getItem("language") || "en";
+
+  document.querySelectorAll("[data-lang]").forEach(el=>{
+    const key = el.dataset.lang;
+    if(translations[lang][key]) el.innerText = translations[lang][key];
+  });
+
+  document.querySelectorAll("[data-lang-placeholder]").forEach(el=>{
+    const key = el.dataset.langPlaceholder;
+    if(translations[lang][key]) el.placeholder = translations[lang][key];
+  });
+});
+</script>
+<script>
+const API_BASE = "http://localhost:5000/api/patients";
+ 
+/* SHOW / HIDE SMOKING DETAILS */
+document.querySelectorAll('input[name="smoking"]').forEach(r=>{
+  r.addEventListener("change",()=>{
+    const yes = r.value==="Yes" && r.checked;
+    document.getElementById("smokingDetails").classList.toggle("hidden", !yes);
+    document.getElementById("smokingDurationBox").classList.toggle("hidden", !yes);
+  });
+});
+ 
+/* OTHER ADDICTION */
+const otherCheckbox = document.getElementById("addictionOther");
+const detailsBox = document.getElementById("addictionDetailsBox");
+ 
+otherCheckbox.addEventListener("change", () => {
+  detailsBox.style.display = otherCheckbox.checked ? "block" : "none";
+});
+ 
+/* LOAD STEP 2 (UNCHANGED) */
+window.onload = async () => {
+  const patientId = localStorage.getItem("patientId");
+  if (!patientId) return;
+ 
+  try {
+    const res = await fetch(`${API_BASE}/${patientId}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.step2) return;
+    const s = data.step2;
+ 
+    if (s.smoking) {
+      const radio = document.querySelector(`input[name="smoking"][value="${s.smoking}"]`);
+      if(radio) radio.checked = true;
+      if(s.smoking==="Yes"){
+        document.getElementById("smokingDetails").classList.remove("hidden");
+        document.getElementById("smokingDurationBox").classList.remove("hidden");
+      }
+    }
+ 
+    smokingFrequency.value = s.smokingFrequency || "";
+    smokingDuration.value = s.smokingDuration || "";
+    (s.addiction||[]).forEach(v=>{
+      document.querySelectorAll(".addiction").forEach(c=>{
+        if(c.value===v) c.checked=true;
+      });
+    });
+    addictionDetails.value = s.addictionDetails || "";
+    alcoholType.value = s.alcoholType || "";
+    alcoholFrequency.value = s.alcoholFrequency || "";
+    exerciseType.value = s.exerciseType || "";
+    exerciseFrequency.value = s.exerciseFrequency || "";
+    exerciseDuration.value = s.exerciseDuration || "";
+    sleepHours.value = s.sleepHours || "";
+    sleepQuality.value = s.sleepQuality || "";
+  } catch(err){
+    console.error("Load error", err);
+  }
+};
+ 
+/* VALIDATION (NEW - FRONTEND ONLY) */
+function validateStep2(){
+  let ok = true;
+  const lang = localStorage.getItem("language") || "en"; // get selected language
+
+  document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+  const smoking = document.querySelector('input[name="smoking"]:checked');
+  if(!smoking){ 
+    smokingError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+
+  if(smoking?.value === "Yes"){
+    if(!smokingFrequency.value){ 
+      smokingFreqError.textContent = translations[lang].required; 
+      ok = false; 
+    }
+    if(!smokingDuration.value){ 
+      smokingDurError.textContent = translations[lang].required; 
+      ok = false; 
+    }
+  }
+
+  const addictions = document.querySelectorAll(".addiction:checked");
+  if(addictions.length === 0){ 
+    addictionError.textContent = translations[lang].select_at_least_one; 
+    ok = false; 
+  }
+
+  if(addictionOther.checked && !addictionDetails.value){
+    addictionDetailsError.textContent = translations[lang].required; 
+    ok = false;
+  }
+
+  if(!alcoholType.value){ 
+    alcoholTypeError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+  if(!alcoholFrequency.value){ 
+    alcoholFreqError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+
+  if(!exerciseType.value){ 
+    exerciseTypeError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+  if(!exerciseFrequency.value){ 
+    exerciseFreqError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+  if(!exerciseDuration.value){ 
+    exerciseDurError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+
+  if(!sleepHours.value){ 
+    sleepHoursError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+  if(!sleepQuality.value){ 
+    sleepQualityError.textContent = translations[lang].required; 
+    ok = false; 
+  }
+
+  return ok;
+}
+
+/* SAVE STEP 2 (LOGIC UNCHANGED) */
+async function saveStep2(){
+  if(!validateStep2()) return;
+ 
+  const patientId = localStorage.getItem("patientId");
+  if(!patientId){ alert("Patient not found."); return; }
+ 
+  const step2 = {
+    smoking: document.querySelector('input[name="smoking"]:checked')?.value || "",
+    smokingFrequency: smokingFrequency.value,
+    smokingDuration: smokingDuration.value,
+    addiction: Array.from(document.querySelectorAll(".addiction:checked")).map(i=>i.value),
+    addictionDetails: addictionDetails.value,
+    alcoholType: alcoholType.value,
+    alcoholFrequency: alcoholFrequency.value,
+    exerciseType: exerciseType.value,
+    exerciseFrequency: exerciseFrequency.value,
+    exerciseDuration: exerciseDuration.value,
+    sleepHours: sleepHours.value,
+    sleepQuality: sleepQuality.value
+  };
+ 
+  try{
+    const res = await fetch(`${API_BASE}/${patientId}/step2`,{
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ step2 })
+    });
+    if(!res.ok) throw new Error("Failed to save step2");
+    location.href="consult3.html";
+  } catch(err){
+    alert("Server error");
+    console.error(err);
+  }
+}
+</script>
+ 
+</body>
+</html>
+ 

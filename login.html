@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* ===== Reset ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* ===== Login Box ===== */
+    .login-box {
+      background: #ffffff;
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .role-label {
+      font-size: 13px;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #019231;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px 0;
+      background: #019231;
+      border: none;
+      color: white;
+      font-size: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #076920;
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .login-box {
+        padding: 20px 15px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      select,
+      input {
+        font-size: 13px;
+        padding: 9px 10px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+    <h2 data-lang="login_title">Login</h2>
+
+    <label class="role-label" data-lang="select_role_label">Select Role</label>
+
+    <select id="role">
+      <option data-lang="select_role_option">Select Role</option>
+      <option value="doctor" data-lang="doctor_option">Doctor</option>
+      <option value="admin" data-lang="admin_option">Admin</option>
+    </select>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Email"
+      data-lang-placeholder="email_placeholder"
+    />
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      data-lang-placeholder="password_placeholder"
+    />
+
+    <button onclick="login()" data-lang="login_button">Login</button>
+  </div>
+
+  <!-- LANGUAGE DATA -->
+  <script>
+    const translations = {
+      en: {
+        login_title: "Login",
+        select_role_label: "Select Role",
+        select_role_option: "Select Role",
+        doctor_option: "Doctor",
+        admin_option: "Admin",
+        email_placeholder: "Email",
+        password_placeholder: "Password",
+        login_button: "Login",
+        alert_select_role: "Please select a role",
+        alert_enter_credentials: "Please enter email and password",
+        alert_login_failed: "Login failed",
+        alert_server_error: "Server error"
+      },
+      hi: {
+        login_title: "लॉगिन",
+        select_role_label: "भूमिका चुनें",
+        select_role_option: "भूमिका चुनें",
+        doctor_option: "डॉक्टर",
+        admin_option: "एडमिन",
+        email_placeholder: "ईमेल",
+        password_placeholder: "पासवर्ड",
+        login_button: "लॉगिन",
+        alert_select_role: "कृपया भूमिका चुनें",
+        alert_enter_credentials: "कृपया ईमेल और पासवर्ड दर्ज करें",
+        alert_login_failed: "लॉगिन विफल",
+        alert_server_error: "सर्वर त्रुटि"
+      },
+      kn: {
+        login_title: "ಲಾಗಿನ್",
+        select_role_label: "ಭೂಮಿಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+        select_role_option: "ಭೂಮಿಕೆ ಆಯ್ಕೆಮಾಡಿ",
+        doctor_option: "ವೈದ್ಯ",
+        admin_option: "ನಿರ್ವಾಹಕ",
+        email_placeholder: "ಇಮೇಲ್",
+        password_placeholder: "ಪಾಸ್ವರ್ಡ್",
+        login_button: "ಲಾಗಿನ್",
+        alert_select_role: "ದಯವಿಟ್ಟು ಭೂಮಿಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+        alert_enter_credentials: "ದಯವಿಟ್ಟು ಇಮೇಲ್ ಮತ್ತು ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ",
+        alert_login_failed: "ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ",
+        alert_server_error: "ಸರ್ವರ್ ದೋಷ"
+      }
+    };
+  </script>
+
+  <!-- APPLY LANGUAGE -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const lang = localStorage.getItem("language") || "en";
+
+      // Set innerText for all elements with data-lang
+      document.querySelectorAll("[data-lang]").forEach(el => {
+        const key = el.getAttribute("data-lang");
+        if (translations[lang][key]) el.innerText = translations[lang][key];
+      });
+
+      // Set placeholders
+      document.querySelectorAll("[data-lang-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-lang-placeholder");
+        if (translations[lang][key]) el.placeholder = translations[lang][key];
+      });
+    });
+  </script>
+
+  <!-- LOGIN FUNCTION -->
+  <script>
+    async function login() {
+      const lang = localStorage.getItem("language") || "en";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const role = document.getElementById("role").value;
+
+      if (role === translations[lang].select_role_option) {
+        alert(translations[lang].alert_select_role);
+        return;
+      }
+
+      if (!email || !password) {
+        alert(translations[lang].alert_enter_credentials);
+        return;
+      }
+
+      const url =
+        role === "admin"
+          ? "http://localhost:5000/api/admin/login"
+          : "http://localhost:5000/api/doctor/login";
+
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || translations[lang].alert_login_failed);
+          return;
+        }
+
+        localStorage.setItem("email", email);
+        localStorage.setItem("role", role);
+
+        if (role === "admin") {
+          window.location.href = "admin_dashboard.html";
+        } else {
+          window.location.href = "doctordashboard.html";
+        }
+      } catch (err) {
+        console.error(err);
+        alert(translations[lang].alert_server_error);
+      }
+    }
+  </script>
+
+</body>
+</html>

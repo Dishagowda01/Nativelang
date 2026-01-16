@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Reports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", sans-serif;
+}
+
+body{
+  background:#eef6fb;
+}
+
+.header{
+  height:72px;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  background:#ffffff;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.right-logo img{
+  height:100px;
+  object-fit:contain;
+}
+
+.dashboard{
+  display:flex;
+  gap:20px;
+  padding:20px;
+}
+
+.sidebar{
+  width:220px;
+  background:#ffffff;
+  border-radius:10px;
+  padding:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.sidebar ul{
+  list-style:none;
+}
+
+.sidebar li a{
+  display:block;
+  padding:10px;
+  font-size:14px;
+  border-radius:6px;
+  text-decoration:none;
+  color:#333;
+  margin-bottom:6px;
+}
+
+.sidebar li a.active,
+.sidebar li a:hover{
+  background:#0b7d85;
+  color:#fff;
+}
+
+.center{
+  flex:1;
+}
+
+.card{
+  background:#ffffff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.card h4{
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  margin-top:15px;
+  width:100%;
+  padding:10px;
+  background:#0b7d85;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#095e64;
+}
+
+.right{
+  width:260px;
+}
+
+.quick-actions button{
+  background:#ffffff;
+  color:#333;
+  border:1px solid #ccc;
+}
+
+.quick-actions button:hover{
+  background:#0b7d85;
+  color:#fff;
+}
+
+@media(max-width:900px){
+  .dashboard{ flex-direction:column; }
+  .sidebar,.right{ width:100%; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="right-logo">
+    <img src="images/clogo.png" alt="Logo">
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <div class="sidebar">
+    <ul>
+      <li><a href="doctordashboard.html" data-lang="dashboard">Dashboard</a></li>
+      <li><a href="aireports.html" class="active" data-lang="ai_reports">AI Reports</a></li>
+    </ul>
+  </div>
+
+  <div class="center">
+    <div class="card">
+      <h4 data-lang="generate_title">Generate AI Wellness Summary</h4>
+
+      <label for="patientSelect" data-lang="select_patient">Select Patient</label>
+      <select id="patientSelect"></select>
+
+      <button id="generateBtn" data-lang="generate_pdf">Generate PDF</button>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="card quick-actions">
+      <h4 data-lang="quick_actions">Quick Actions</h4>
+      <button onclick="location.href='startconsultation.html'" data-lang="start_consultation">Start Consultation</button>
+      <button onclick="location.href='appointments.html'" data-lang="add_appointment">Add New Appointment</button>
+      <button onclick="location.href='patients.html'" data-lang="view_patient">View Patient Record</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ================= TRANSLATIONS ================= */
+const translations = {
+  en:{
+    dashboard:"Dashboard",
+    ai_reports:"AI Reports",
+    generate_title:"Generate AI Wellness Summary",
+    select_patient:"Select Patient",
+    generate_pdf:"Generate PDF",
+    quick_actions:"Quick Actions",
+    start_consultation:"Start Consultation",
+    add_appointment:"Add New Appointment",
+    view_patient:"View Patient Record",
+    select_option:"-- Select Patient --",
+    alert_select:"Please select a patient!",
+    alert_load:"Unable to load patient list"
+  },
+  kn:{
+    dashboard:"ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    ai_reports:"AI ವರದಿಗಳು",
+    generate_title:"AI ಆರೋಗ್ಯ ಸಾರಾಂಶ ರಚಿಸಿ",
+    select_patient:"ರೋಗಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    generate_pdf:"PDF ರಚಿಸಿ",
+    quick_actions:"ತ್ವರಿತ ಕ್ರಮಗಳು",
+    start_consultation:"ಸಮಾಲೋಚನೆ ಪ್ರಾರಂಭಿಸಿ",
+    add_appointment:"ಹೊಸ ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ಸೇರಿಸಿ",
+    view_patient:"ರೋಗಿ ದಾಖಲೆ ವೀಕ್ಷಿಸಿ",
+    select_option:"-- ರೋಗಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ --",
+    alert_select:"ದಯವಿಟ್ಟು ರೋಗಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ!",
+    alert_load:"ರೋಗಿಗಳ ಪಟ್ಟಿಯನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ"
+  },
+  hi:{
+    dashboard:"डैशबोर्ड",
+    ai_reports:"AI रिपोर्ट",
+    generate_title:"AI स्वास्थ्य सारांश बनाएँ",
+    select_patient:"मरीज़ चुनें",
+    generate_pdf:"PDF बनाएं",
+    quick_actions:"त्वरित क्रियाएँ",
+    start_consultation:"परामर्श शुरू करें",
+    add_appointment:"नई अपॉइंटमेंट जोड़ें",
+    view_patient:"मरीज़ रिकॉर्ड देखें",
+    select_option:"-- मरीज़ चुनें --",
+    alert_select:"कृपया मरीज़ चुनें!",
+    alert_load:"मरीज़ सूची लोड नहीं हो सकी"
+  },
+
+};
+
+/* ================= APPLY LANGUAGE ================= */
+const lang = localStorage.getItem("language") || "en";
+document.querySelectorAll("[data-lang]").forEach(el=>{
+  el.textContent = translations[lang][el.dataset.lang];
+});
+
+/* ================= LOAD PATIENTS ================= */
+async function loadPatients(){
+  try{
+    const res = await fetch("/api/patients");
+    const patients = await res.json();
+    const select = document.getElementById("patientSelect");
+
+    select.innerHTML = `<option value="">${translations[lang].select_option}</option>`;
+
+    patients.forEach(p=>{
+      const opt = document.createElement("option");
+      opt.value = p._id;
+      opt.textContent = p.step1?.fullName || "Unnamed";
+      select.appendChild(opt);
+    });
+  }catch{
+    alert(translations[lang].alert_load);
+  }
+}
+loadPatients();
+
+/* ================= GENERATE PDF ================= */
+document.getElementById("generateBtn").onclick = ()=>{
+  const id = patientSelect.value;
+  if(!id){
+    alert(translations[lang].alert_select);
+    return;
+  }
+  window.open(`/ai-summary/${id}`,"_blank");
+};
+</script>
+
+</body>
+</html>

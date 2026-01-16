@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title data-lang="page_title">Practitioner Registration</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #e0f2fe, #f0fdf4);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 850px;
+  padding: 30px 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin: 0;
+  text-align: center;
+  color: #0f172a;
+}
+
+.subtitle {
+  text-align: center;
+  color: #64748b;
+  margin-top: 6px;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.section-title {
+  margin: 25px 0 12px;
+  font-weight: 600;
+  color: #076917;
+  border-left: 4px solid #0abb54;
+  padding-left: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #335542;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5f5;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #14b866;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+}
+
+.file-box {
+  border: 2px dashed #94a3b8;
+  padding: 15px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+button {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #14b866, #0d9435);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2 data-lang="form_title"></h2>
+  <p class="subtitle" data-lang="form_subtitle"></p>
+
+  <form id="registrationForm" enctype="multipart/form-data" novalidate>
+
+    <div class="section-title" data-lang="account_section"></div>
+    <div class="form-grid">
+      <div class="full-width">
+        <label data-lang="email_label"></label>
+        <input type="email" name="email" data-lang-placeholder="email_placeholder">
+      </div>
+    </div>
+
+    <div class="section-title" data-lang="personal_section"></div>
+    <div class="form-grid">
+      <div>
+        <label data-lang="first_name_label"></label>
+        <input type="text" name="firstName" data-lang-placeholder="first_name_placeholder">
+      </div>
+      <div>
+        <label data-lang="last_name_label"></label>
+        <input type="text" name="lastName" data-lang-placeholder="last_name_placeholder">
+      </div>
+      <div>
+        <label data-lang="dob_label"></label>
+        <input type="date" name="dateOfBirth">
+      </div>
+      <div>
+        <label data-lang="pin_label"></label>
+        <input type="text" name="pinCode">
+      </div>
+      <div class="full-width">
+        <label data-lang="whatsapp_label"></label>
+        <input type="text" name="registrationNumber" pattern="[0-9]{10}">
+      </div>
+      <div class="full-width">
+        <label data-lang="specialization_label"></label>
+        <input type="text" name="specialization">
+      </div>
+    </div>
+
+    <div class="section-title" data-lang="documents_section"></div>
+    <div class="form-grid">
+      <div class="file-box full-width">
+        <strong data-lang="degree_label"></strong><br>
+        <input type="file" name="degreeCertificates" multiple accept=".pdf">
+      </div>
+      <div class="file-box full-width">
+        <strong data-lang="photo_label"></strong><br>
+        <input type="file" name="professionalPhoto" accept=".jpg,.jpeg,.png">
+      </div>
+    </div>
+
+    <button type="submit" id="submitBtn" data-lang="submit_button" disabled></button>
+
+  </form>
+</div>
+
+<script>
+const translations = {
+  en: {
+    page_title: "Practitioner Registration",
+    form_title: "Practitioner Registration",
+    form_subtitle: "Join Dr.ViKi platform as a certified AYUSH practitioner",
+    account_section: "Account Details",
+    personal_section: "Personal Details",
+    documents_section: "Documents",
+    email_label: "Email",
+    email_placeholder: "Enter your email",
+    first_name_label: "First Name",
+    first_name_placeholder: "Enter first name",
+    last_name_label: "Last Name",
+    last_name_placeholder: "Enter last name",
+    dob_label: "Date of Birth",
+    pin_label: "Pin Code",
+    whatsapp_label: "WhatsApp Number",
+    specialization_label: "Specialization",
+    degree_label: "Degree Certificates",
+    photo_label: "Professional Photo",
+    submit_button: "Complete Registration",
+    alert_fill_all: "Please fill all required fields",
+    alert_email_exists: "Email already registered",
+    alert_success: "Registration successful! Please wait until approval.",
+    alert_server_error: "Server error. Please try again later."
+  },
+
+  hi: {
+    page_title: "प्रैक्टिशनर पंजीकरण",
+    form_title: "प्रैक्टिशनर पंजीकरण",
+    form_subtitle: "Dr.ViKi प्लेटफॉर्म से प्रमाणित AYUSH चिकित्सक के रूप में जुड़ें",
+    account_section: "खाता विवरण",
+    personal_section: "व्यक्तिगत विवरण",
+    documents_section: "दस्तावेज़",
+    email_label: "ईमेल",
+    email_placeholder: "अपना ईमेल दर्ज करें",
+    first_name_label: "पहला नाम",
+    first_name_placeholder: "पहला नाम दर्ज करें",
+    last_name_label: "अंतिम नाम",
+    last_name_placeholder: "अंतिम नाम दर्ज करें",
+    dob_label: "जन्म तिथि",
+    pin_label: "पिन कोड",
+    whatsapp_label: "व्हाट्सएप नंबर",
+    specialization_label: "विशेषज्ञता",
+    degree_label: "डिग्री प्रमाणपत्र",
+    photo_label: "पेशेवर फोटो",
+    submit_button: "पंजीकरण पूरा करें",
+    alert_fill_all: "कृपया सभी आवश्यक फ़ील्ड भरें",
+    alert_email_exists: "ईमेल पहले से पंजीकृत है",
+    alert_success: "पंजीकरण सफल हुआ!",
+    alert_server_error: "सर्वर त्रुटि",
+    choose_file: "फ़ाइल चुनें",
+    no_file: "कोई फ़ाइल चयनित नहीं"
+
+  },
+
+  kn: {
+    page_title: "ಪ್ರ್ಯಾಕ್ಟಿಷನರ್ ನೋಂದಣಿ",
+    form_title: "ಪ್ರ್ಯಾಕ್ಟಿಷನರ್ ನೋಂದಣಿ",
+    form_subtitle: "Dr.ViKi ವೇದಿಕೆಯಲ್ಲಿ ಪ್ರಮಾಣಿತ AYUSH ವೈದ್ಯರಾಗಲು ಸೇರಿ",
+    account_section: "ಖಾತೆ ವಿವರಗಳು",
+    personal_section: "ವೈಯಕ್ತಿಕ ವಿವರಗಳು",
+    documents_section: "ಡಾಕ್ಯುಮೆಂಟ್‌ಗಳು",
+    email_label: "ಇಮೇಲ್",
+    email_placeholder: "ಇಮೇಲ್ ನಮೂದಿಸಿ",
+    first_name_label: "ಮೊದಲ ಹೆಸರು",
+    first_name_placeholder: "ಮೊದಲ ಹೆಸರು ನಮೂದಿಸಿ",
+    last_name_label: "ಕೊನೆಯ ಹೆಸರು",
+    last_name_placeholder: "ಕೊನೆಯ ಹೆಸರು ನಮೂದಿಸಿ",
+    dob_label: "ಹುಟ್ಟಿದ ದಿನಾಂಕ",
+    pin_label: "ಪಿನ್ ಕೋಡ್",
+    whatsapp_label: "ವಾಟ್ಸಪ್ ಸಂಖ್ಯೆ",
+    specialization_label: "ವಿಶೇಷಜ್ಞಾನ",
+    degree_label: "ಪದವಿ ಪ್ರಮಾಣಪತ್ರಗಳು",
+    photo_label: "ವೃತ್ತಿಪರ ಫೋಟೋ",
+    submit_button: "ನೋಂದಣಿಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ",
+    alert_fill_all: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+    alert_email_exists: "ಇಮೇಲ್ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ",
+    alert_success: "ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ!",
+    alert_server_error: "ಸರ್ವರ್ ದೋಷ",
+    choose_file: "ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ",
+    no_file: "ಯಾವುದೇ ಫೈಲ್ ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ"
+
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lang = localStorage.getItem("language") || "en";
+
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    el.innerText = translations[lang][el.dataset.lang];
+  });
+
+  document.querySelectorAll("[data-lang-placeholder]").forEach(el => {
+    el.placeholder = translations[lang][el.dataset.langPlaceholder];
+  });
+});
+</script>
+
+<script>
+const form = document.getElementById("registrationForm");
+const submitBtn = document.getElementById("submitBtn");
+const inputs = form.querySelectorAll("input");
+
+function toggleButton() {
+  submitBtn.disabled = [...inputs].some(i =>
+    i.type === "file" ? i.files.length === 0 : i.value.trim() === ""
+  );
+}
+
+inputs.forEach(i => {
+  i.addEventListener("input", toggleButton);
+  i.addEventListener("change", toggleButton);
+});
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const lang = localStorage.getItem("language") || "en";
+
+  if (submitBtn.disabled) {
+    alert(translations[lang].alert_fill_all);
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/doctor/register", {
+      method: "POST",
+      body: new FormData(form)
+    });
+
+    if (!res.ok) {
+      alert(translations[lang].alert_email_exists);
+      return;
+    }
+
+    alert(translations[lang].alert_success);
+    form.reset();
+    submitBtn.disabled = true;
+
+  } catch {
+    alert(translations[lang].alert_server_error);
+  }
+});
+</script>
+
+</body>
+</html>

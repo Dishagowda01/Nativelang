@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">Patient Registration</title>
+<link rel="stylesheet" href="consult.css">
+
+<style>
+.form-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+}
+.btn-prev{
+  padding:12px 24px;
+  background:#e5e7eb;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn-next{
+  padding:12px 24px;
+  background:#16a34a;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+.error{
+  color:red;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <div class="page-title" data-lang="page_title"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-lang="tab1"></div>
+    <div class="tab" data-lang="tab2"></div>
+    <div class="tab" data-lang="tab3"></div>
+    <div class="tab" data-lang="tab4"></div>
+    <div class="tab" data-lang="tab5"></div>
+    <div class="tab" data-lang="tab6"></div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-title" data-lang="form_title"></div>
+    <div class="form-subtext" data-lang="form_subtext"></div>
+
+    <div class="form-grid">
+
+      <div>
+        <label data-lang="full_name"></label>
+        <input id="fullName">
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="dob"></label>
+        <input type="date" id="dob">
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="gender"></label>
+        <select id="gender">
+          <option value="" data-lang="select"></option>
+          <option value="Male" data-lang="male"></option>
+          <option value="Female" data-lang="female"></option>
+          <option value="Others" data-lang="others"></option>
+          <option value="Prefer not to say" data-lang="prefer_not"></option>
+        </select>
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="marital"></label>
+        <select id="maritalStatus">
+          <option value="" data-lang="select"></option>
+          <option value="Single" data-lang="single"></option>
+          <option value="Married" data-lang="married"></option>
+          <option value="Divorced" data-lang="divorced"></option>
+          <option value="Widowed" data-lang="widowed"></option>
+        </select>
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="occupation"></label>
+        <input id="occupation">
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="education"></label>
+        <select id="education">
+          <option value="" data-lang="select"></option>
+          <option value="High School" data-lang="highschool"></option>
+          <option value="Bachelor" data-lang="bachelor"></option>
+          <option value="Master" data-lang="master"></option>
+          <option value="Doctorate" data-lang="doctorate"></option>
+        </select>
+        <small class="error"></small>
+      </div>
+
+      <div class="full-width">
+        <label data-lang="phone"></label>
+        <input id="phone">
+        <small class="error"></small>
+      </div>
+
+      <div class="full-width">
+        <label data-lang="email"></label>
+        <input type="email" id="email">
+        <small class="error"></small>
+      </div>
+
+      <div class="full-width">
+        <label data-lang="city"></label>
+        <input id="city">
+        <small class="error"></small>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-buttons">
+    <button type="button" class="btn-prev" onclick="location.href='index.html'" data-lang="prev_btn"></button>
+    <button type="button" class="btn-next" onclick="submitStep1()" data-lang="next_btn"></button>
+  </div>
+
+</div>
+
+<script>
+const API_BASE = "http://localhost:5000/api/patients";
+
+/* ================= LANGUAGE ================= */
+const translations = {
+  en: {
+    page_title: "Patient Registration",
+    tab1: "Personal Information",
+    tab2: "Lifestyle & Social History",
+    tab3: "Medical History",
+    tab4: "Current Health Status",
+    tab5: "AYUSH Profile",
+    tab6: "Image Capture",
+    form_title: "Personal Information",
+    form_subtext: "Please fill out all required fields",
+    full_name: "Full Name *",
+    dob: "Date of Birth *",
+    gender: "Gender *",
+    marital: "Marital Status *",
+    occupation: "Occupation *",
+    education: "Education *",
+    phone: "Phone *",
+    email: "Email *",
+    city: "City *",
+    select: "Select",
+    male: "Male",
+    female: "Female",
+    others: "Others",
+    prefer_not: "Prefer not to say",
+    single: "Single",
+    married: "Married",
+    divorced: "Divorced",
+    widowed: "Widowed",
+    highschool: "High School",
+    bachelor: "Bachelor",
+    master: "Master",
+    doctorate: "Doctorate",
+    prev_btn: "← Previous",
+    next_btn: "Save & Next →",
+    required: "Required"
+  },
+  kn: {
+    page_title: "ರೋಗಿ ನೋಂದಣಿ",
+    tab1: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+    tab2: "ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    tab3: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    tab4: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    tab5: "AYUSH ಪ್ರೊಫೈಲ್",
+    tab6: "ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+    form_title: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+    form_subtext: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+    full_name: "ಪೂರ್ಣ ಹೆಸರು *",
+    dob: "ಹುಟ್ಟಿದ ದಿನಾಂಕ *",
+    gender: "ಲಿಂಗ *",
+    marital: "ವೈವಾಹಿಕ ಸ್ಥಿತಿ *",
+    occupation: "ಉದ್ಯೋಗ *",
+    education: "ಶಿಕ್ಷಣ *",
+    phone: "ದೂರವಾಣಿ *",
+    email: "ಇಮೇಲ್ *",
+    city: "ನಗರ *",
+    select: "ಆಯ್ಕೆಮಾಡಿ",
+    male: "ಪುರುಷ",
+    female: "ಸ್ತ್ರೀ",
+    others: "ಇತರೆ",
+    prefer_not: "ಹೇಳಲು ಇಚ್ಛೆ ಇಲ್ಲ",
+    single: "ಅವಿವಾಹಿತ",
+    married: "ವಿವಾಹಿತ",
+    divorced: "ವಿಚ್ಛೇದಿತ",
+    widowed: "ವಿಧವೆ / ವಿಧುರ",
+    highschool: "ಹೈಸ್ಕೂಲ್",
+    bachelor: "ಬ್ಯಾಚುಲರ್",
+    master: "ಮಾಸ್ಟರ್",
+    doctorate: "ಡಾಕ್ಟರೇಟ್",
+    prev_btn: "← ಹಿಂದಿನದು",
+    next_btn: "ಉಳಿಸಿ ಮತ್ತು ಮುಂದುವರಿಸಿ →",
+    required: "ಅಗತ್ಯ"
+  },
+  hi: {
+  page_title: "रोगी पंजीकरण",
+  tab1: "व्यक्तिगत जानकारी",
+  tab2: "जीवनशैली और सामाजिक इतिहास",
+  tab3: "चिकित्सा इतिहास",
+  tab4: "वर्तमान स्वास्थ्य स्थिति",
+  tab5: "AYUSH प्रोफ़ाइल",
+  tab6: "छवि कैप्चर",
+
+  form_title: "व्यक्तिगत जानकारी",
+  form_subtext: "कृपया सभी आवश्यक फ़ील्ड भरें",
+
+  full_name: "पूरा नाम *",
+  dob: "जन्म तिथि *",
+  gender: "लिंग *",
+  marital: "वैवाहिक स्थिति *",
+  occupation: "पेशा *",
+  education: "शिक्षा *",
+  phone: "फ़ोन नंबर *",
+  email: "ईमेल *",
+  city: "शहर *",
+
+  select: "चयन करें",
+  male: "पुरुष",
+  female: "महिला",
+  others: "अन्य",
+  prefer_not: "बताने की इच्छा नहीं",
+  single: "अविवाहित",
+  married: "विवाहित",
+  divorced: "तलाकशुदा",
+  widowed: "विधवा / विधुर",
+
+  highschool: "हाई स्कूल",
+  bachelor: "स्नातक",
+  master: "स्नातकोत्तर",
+  doctorate: "डॉक्टरेट",
+
+  prev_btn: "← पिछला",
+  next_btn: "सहेजें और आगे →",
+  required: "आवश्यक"
+}
+
+};
+
+function applyLanguage() {
+  const lang = localStorage.getItem("language") || "en";
+
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    const key = el.dataset.lang;
+    if (translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+
+  document.title = translations[lang].page_title;
+}
+
+/* ================= VALIDATION ================= */
+function validate(){
+  let ok = true;
+  document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+  const lang = localStorage.getItem("language") || "en";
+
+  [
+    "fullName","dob","gender","maritalStatus",
+    "occupation","education","phone","email","city"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value) {
+      const errorEl = el.parentElement.querySelector(".error");
+      if (errorEl) errorEl.textContent = translations[lang].required;
+      ok = false;
+    }
+  });
+  return ok;
+}
+
+/* ================= LOAD STEP 1 ================= */
+window.addEventListener("load", async () => {
+
+  const patientId = localStorage.getItem("patientId");
+
+  if (patientId) {
+    try {
+      const res = await fetch(`${API_BASE}/${patientId}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.step1) {
+          Object.entries(data.step1).forEach(([key, value]) => {
+            const el = document.getElementById(key);
+            if (el && value !== null) el.value = value;
+          });
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  applyLanguage();
+});
+
+/* ================= SAVE STEP 1 ================= */
+async function submitStep1(){
+  if (!validate()) return;
+
+  const step1 = {
+    fullName: fullName.value,
+    dob: dob.value,
+    gender: gender.value,
+    maritalStatus: maritalStatus.value,
+    occupation: occupation.value,
+    education: education.value,
+    phone: phone.value,
+    email: email.value,
+    city: city.value
+  };
+
+  let patientId = localStorage.getItem("patientId");
+
+  try {
+    if (!patientId) {
+      const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ step1 })
+      });
+      const data = await res.json();
+      localStorage.setItem("patientId", data.patientId);
+    } else {
+      await fetch(`${API_BASE}/${patientId}/step1`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ step1 })
+      });
+    }
+
+    localStorage.setItem("gender", gender.value);
+    location.href = "consult2.html";
+
+  } catch (err) {
+    alert("Server error. Please try again.");
+  }
+}
+</script>
+
+</body>
+</html>

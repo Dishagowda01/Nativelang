@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">Image Capture & Submit</title>
+<link rel="stylesheet" href="consult.css">
+<style>
+.image-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+@media(max-width:640px){
+  .image-grid{grid-template-columns:1fr;}
+}
+.capture-card{
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:14px;
+  text-align:center;
+}
+.capture-card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#f3f4f6;
+  margin-bottom:10px;
+}
+.capture-card button{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.primary{background:#16a34a;color:#fff;}
+.secondary{background:#e5e7eb;}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-content{
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  width:320px;
+}
+video{
+  width:100%;
+  border-radius:10px;
+  background:#000;
+}
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+.modal-actions button{
+  flex:1;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  font-weight:600;
+}
+.form-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+}
+.btn-prev,.btn-next{
+  padding:12px 24px;
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn-prev{background:#e5e7eb;}
+.btn-next{background:#16a34a;color:#fff;}
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+  <div class="page-title" data-lang="page_title">Patient Registration</div>
+
+  <div class="tabs">
+    <div class="tab active" data-lang="tab1">Personal Information</div>
+    <div class="tab active" data-lang="tab2">Lifestyle & Social History</div>
+    <div class="tab active" data-lang="tab3">Medical History</div>
+    <div class="tab active" data-lang="tab4">Current Health Status</div>
+    <div class="tab active" data-lang="tab5">AYUSH Profile</div>
+    <div class="tab active" data-lang="tab6">Image Capture</div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-title" data-lang="form_title">Image Capture For AI Training</div>
+    <div class="form-subtext" data-lang="form_subtext">Capture or upload clear images</div>
+
+    <div class="image-grid" id="grid"></div>
+
+    <div class="form-buttons">
+      <button class="btn-prev" onclick="go('consult6.html')" data-lang="prev_btn">← Previous</button>
+      <button class="btn-next" onclick="submitImages()" data-lang="next_btn">Submit Registration →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CAMERA MODAL -->
+<div class="modal" id="cameraModal">
+  <div class="modal-content">
+    <video id="video" autoplay playsinline></video>
+    <div class="modal-actions">
+      <button id="captureBtn" class="primary" data-lang="capture_btn">Capture</button>
+      <button id="uploadBtn" class="secondary" data-lang="upload_btn">Upload Image</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const sections = [
+  { id:"tongue" },
+  { id:"forehead" },
+  { id:"eyes" },
+  { id:"skin" },
+  { id:"nails" },
+  { id:"other" }
+];
+
+const translations = {
+  en: {
+    page_title: "Patient Registration",
+    tab1: "Personal Information",
+    tab2: "Lifestyle & Social History",
+    tab3: "Medical History",
+    tab4: "Current Health Status",
+    tab5: "AYUSH Profile",
+    tab6: "Image Capture",
+    form_title: "Image Capture For AI Training",
+    form_subtext: "Capture or upload clear images",
+    prev_btn: "← Previous",
+    next_btn: "Submit Registration →",
+    capture_btn: "Capture",
+    upload_btn: "Upload Image",
+    tongue: "Tongue",
+    forehead: "Forehead",
+    eyes: "Eyes",
+    skin: "Skin",
+    nails: "Nails",
+    other: "Other Areas",
+    camera_denied: "Camera access denied",
+    patient_id_missing: "Patient ID missing",
+    images_missing: "Please capture images for:",
+    registration_complete: "Patient Registration Completed ✅",
+    upload_failed: "Image upload failed"
+  },
+  kn: {
+    page_title: "ರೋಗಿ ನೋಂದಣಿ",
+    tab1: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+    tab2: "ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    tab3: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    tab4: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    tab5: "AYUSH ಪ್ರೊಫೈಲ್",
+    tab6: "ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+    form_title: "AI ತರಬೇತಿಗಾಗಿ ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+    form_subtext: "ಸ್ಪಷ್ಟ ಚಿತ್ರಗಳನ್ನು ಸೆರೆಹಿಡಿಯಿರಿ ಅಥವಾ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    prev_btn: "← ಹಿಂದಿನದು",
+    next_btn: "ರೋಗಿ ನೋಂದಣಿ ಸಲ್ಲಿಸಿ →",
+    capture_btn: "ಸೆರೆಹಿಡಿ",
+    upload_btn: "ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    tongue: "ಜುಬ್ಬು",
+    forehead: "ಮುಂಭಾಗ",
+    eyes: "ಕಣ್ಣುಗಳು",
+    skin: "ಚರ್ಮ",
+    nails: "ನಖಗಳು",
+    other: "ಇತರ ಪ್ರದೇಶಗಳು",
+    camera_denied: "ಕ್ಯಾಮೆರಾ ಪ್ರವೇಶ ನಿರಾಕರಿಸಲಾಗಿದೆ",
+    patient_id_missing: "ರೋಗಿಯ ID ಕಾಣೆಯಾಗಿದೆ",
+    images_missing: "ದಯವಿಟ್ಟು ಚಿತ್ರಗಳನ್ನು ಸೆರೆಹಿಡಿಯಿರಿ:",
+    registration_complete: "ರೋಗಿಯ ನೋಂದಣಿ ಪೂರ್ಣ ✅",
+    upload_failed: "ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ"
+  },
+  hi: {
+    page_title: "रोगी पंजीकरण",
+    tab1: "व्यक्तिगत जानकारी",
+    tab2: "जीवनशैली और सामाजिक इतिहास",
+    tab3: "चिकित्सा इतिहास",
+    tab4: "वर्तमान स्वास्थ्य स्थिति",
+    tab5: "AYUSH प्रोफ़ाइल",
+    tab6: "छवि कैप्चर",
+    form_title: "एआई प्रशिक्षण के लिए छवि कैप्चर",
+    form_subtext: "साफ़ छवियाँ कैप्चर या अपलोड करें",
+    prev_btn: "← पिछला",
+    next_btn: "रोगी पंजीकरण सबमिट करें →",
+    capture_btn: "कैप्चर",
+    upload_btn: "छवि अपलोड करें",
+    tongue: "जुबान",
+    forehead: "माथा",
+    eyes: "आंखें",
+    skin: "त्वचा",
+    nails: "नाखून",
+    other: "अन्य क्षेत्र",
+    camera_denied: "कैमरा एक्सेस अस्वीकृत",
+    patient_id_missing: "रोगी आईडी गायब है",
+    images_missing: "कृपया छवियाँ कैप्चर करें:",
+    registration_complete: "रोगी पंजीकरण पूरा ✅",
+    upload_failed: "छवि अपलोड विफल"
+  }
+};
+
+let current = null;
+let stream = null;
+const lang = localStorage.getItem("language") || "en";
+
+// Build UI dynamically
+const grid = document.getElementById("grid");
+sections.forEach(s=>{
+  grid.insertAdjacentHTML("beforeend",`
+    <div class="capture-card">
+      <img id="img-${s.id}">
+      <h4 data-lang="${s.id}"></h4>
+      <button class="primary" onclick="openCamera('${s.id}')" data-lang="capture_btn"></button>
+      <button class="secondary" onclick="triggerUpload('${s.id}')" data-lang="upload_btn"></button>
+      <input type="file" id="file-${s.id}" hidden accept="image/*">
+    </div>
+  `);
+});
+
+// Apply language to all elements
+function applyLanguage(){
+  document.querySelectorAll("[data-lang]").forEach(el=>{
+    const key = el.dataset.lang;
+    if(translations[lang][key]) el.innerText = translations[lang][key];
+  });
+  document.title = translations[lang].page_title;
+}
+
+// Camera modal elements
+const cameraModal = document.getElementById("cameraModal");
+const video = document.getElementById("video");
+
+// Open camera
+async function openCamera(id){
+  current = id;
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({ video:true });
+    video.srcObject = stream;
+    cameraModal.style.display = "flex";
+  }catch(err){
+    alert(translations[lang].camera_denied);
+  }
+}
+
+// Close camera
+function closeCamera(){
+  if(stream){
+    stream.getTracks().forEach(t=>t.stop());
+    stream = null;
+  }
+  cameraModal.style.display = "none";
+}
+
+// Take photo
+function takePhoto(){
+  if(!video.videoWidth) return;
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext("2d").drawImage(video,0,0);
+  document.getElementById(`img-${current}`).src = canvas.toDataURL("image/jpeg",0.9);
+  closeCamera();
+}
+
+// File upload
+function triggerUpload(id){
+  const input = document.getElementById(`file-${id}`);
+  input.click();
+  input.onchange = ()=>{
+    if(!input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e=>{
+      document.getElementById(`img-${id}`).src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  };
+}
+
+// Submit images
+async function submitImages(){
+  const patientId = localStorage.getItem("patientId");
+  if(!patientId){
+    alert(translations[lang].patient_id_missing);
+    return;
+  }
+
+  const formData = new FormData();
+  let missing = [];
+
+  sections.forEach(s=>{
+    const img = document.getElementById(`img-${s.id}`);
+    if(s.id !== "other" && (!img.src || !img.src.startsWith("data:image"))){
+      missing.push(translations[lang][s.id]);
+    }
+    if(img.src && img.src.startsWith("data:image")){
+      const blob = dataURLtoBlob(img.src);
+      formData.append(s.id, blob, `${s.id}.jpg`);
+    }
+  });
+
+  if(missing.length>0){
+    alert(translations[lang].images_missing + "\n" + missing.join(", "));
+    return;
+  }
+
+  try{
+    await fetch(`http://localhost:5000/api/patient/upload-images/${patientId}`,{
+      method:"POST",
+      body: formData
+    });
+    alert(translations[lang].registration_complete);
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = "index.html";
+  }catch(err){
+    console.error(err);
+    alert(translations[lang].upload_failed);
+  }
+}
+
+// Helpers
+function dataURLtoBlob(dataurl){
+  const arr = dataurl.split(",");
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8 = new Uint8Array(n);
+  while(n--) u8[n] = bstr.charCodeAt(n);
+  return new Blob([u8], {type:mime});
+}
+
+function go(page){ location.href = page; }
+
+window.addEventListener("load", applyLanguage);
+</script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">AYUSH Profile</title>
+<link rel="stylesheet" href="consult.css">
+
+<style>
+.section-title { font-weight:600; margin:20px 0 8px; }
+.grid-1, .grid-3 { display:grid; gap:16px; margin-bottom:16px; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+textarea, input[type="number"] {
+  width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;
+}
+.checkbox-group label {
+  display:inline-flex; align-items:center; gap:6px;
+  margin-right:16px; margin-bottom:6px; cursor:pointer;
+}
+.form-buttons{ display:flex; justify-content:space-between; margin-top:20px; }
+.btn-prev,.btn-next{
+  padding:12px 24px; border:none; border-radius:6px;
+  font-weight:600; cursor:pointer;
+}
+.btn-prev{ background:#e5e7eb; }
+.btn-next{ background:#16a34a; color:#fff; }
+.btn-next:hover{ background:#15803d; }
+.therapy-list {
+  margin: 8px 0 16px;
+  padding-left: 20px;
+}
+.therapy-list li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+#therapyDetails {
+  min-height: 120px;
+}
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <div class="page-title" data-lang="page_title">Patient Registration</div>
+
+  <div class="tabs">
+    <div class="tab active" data-lang="tab1">Personal Information</div>
+    <div class="tab active" data-lang="tab2">Lifestyle & Social History</div>
+    <div class="tab active" data-lang="tab3">Medical History</div>
+    <div class="tab active" data-lang="tab4">Current Health Status</div>
+    <div class="tab active" data-lang="tab5">AYUSH Profile</div>
+    <div class="tab" data-lang="tab6">Image Capture</div>
+  </div>
+
+  <div class="form-card">
+    <h3 data-lang="form_title">AYUSH Profile</h3>
+    <p class="subtitle" data-lang="form_subtitle">Please fill out the details below</p>
+
+    <div class="section-title" data-lang="section_ayush">AYUSH Assessment</div>
+
+<div class="grid-1">
+  <label for="bodyBuild" data-lang="bodyBuild">Body build</label>
+  <select id="bodyBuild">
+    <option value="" data-lang="select">Select</option>
+    <option value="weakly" data-lang="body_weakly">Weakly developed with thin musculature</option>
+    <option value="moderate" data-lang="body_moderate">Moderately developed with soft and loosely knitted musculature</option>
+    <option value="well" data-lang="body_well">Well developed with firmly knitted musculature</option>
+  </select>
+
+  <label for="nail" data-lang="nail">Nail colour & Size</label>
+  <select id="nail">
+    <option value="" data-lang="select">Select</option>
+    <option value="reddish" data-lang="nail_reddish">Reddish, Small</option>
+    <option value="pale" data-lang="nail_pale">Pale, Medium</option>
+    <option value="pink" data-lang="nail_pink">Pink, Large</option>
+  </select>
+
+  <label for="scalpHair" data-lang="scalpHair">Scalp hair is prone to</label>
+  <select id="scalpHair">
+    <option value="" data-lang="select">Select</option>
+    <option value="graying" data-lang="hair_graying">Graying</option>
+    <option value="falling" data-lang="hair_falling">Falling</option>
+    <option value="breaking" data-lang="hair_breaking">Breaking</option>
+    <option value="split" data-lang="hair_split">Split at ends</option>
+    <option value="none" data-lang="hair_none">None</option>
+  </select>
+
+  <label for="observe" data-lang="observe">Do you observe any of these</label>
+  <select id="observe">
+    <option value="" data-lang="select">Select</option>
+    <option value="nails" data-lang="observe_nails">Nails</option>
+    <option value="palm" data-lang="observe_palm">Palm</option>
+    <option value="sole" data-lang="observe_sole">Sole</option>
+    <option value="lips" data-lang="observe_lips">Lips</option>
+  </select>
+
+  <label for="appetite" data-lang="appetite">Appetite</label>
+  <select id="appetite">
+    <option value="" data-lang="select">Select</option>
+    <option value="regular" data-lang="appetite_regular">Regular, Frequent</option>
+    <option value="irregularInfrequent" data-lang="appetite_irregularInfrequent">Irregular, Infrequent</option>
+    <option value="irregularFrequent" data-lang="appetite_irregularFrequent">Irregular, Frequent</option>
+  </select>
+
+  <label for="bodyTemp" data-lang="bodyTemp">Body Temperature</label>
+  <select id="bodyTemp">
+    <option value="" data-lang="select">Select</option>
+    <option value="higher" data-lang="temp_higher">Higher compared to others</option>
+    <option value="lower" data-lang="temp_lower">Lower compared to others</option>
+    <option value="average" data-lang="temp_average">Average</option>
+    <option value="variable" data-lang="temp_variable">Variable</option>
+  </select>
+
+  <label for="sleep" data-lang="sleep">Sleep</label>
+  <select id="sleep">
+    <option value="" data-lang="select">Select</option>
+    <option value="heavy" data-lang="sleep_heavy">Immediately get sleep, Heavy sleep</option>
+    <option value="moderate" data-lang="sleep_moderate">After few minutes/reading, moderate sleep</option>
+    <option value="less" data-lang="sleep_less">It takes long time to sleep, less sleep</option>
+  </select>
+
+  <label for="bowel" data-lang="bowel">Bowel habits</label>
+  <select id="bowel">
+    <option value="" data-lang="select">Select</option>
+    <option value="regular" data-lang="bowel_regular">Regular</option>
+    <option value="irregular" data-lang="bowel_irregular">Irregular</option>
+    <option value="occasionally" data-lang="bowel_occasionally">Occasionally irregular</option>
+  </select>
+
+  <label for="bodyWeight" data-lang="bodyWeight">Body weight changes</label>
+  <select id="bodyWeight">
+    <option value="" data-lang="select">Select</option>
+    <option value="gainLooseEasy" data-lang="weight_easy">Gain weight easily and lose easily</option>
+    <option value="difficultyGain" data-lang="weight_difficulty">Difficulty in gaining weight</option>
+    <option value="gainLooseDifficult" data-lang="weight_hard">Gain and lose with difficulty</option>
+  </select>
+
+  <label for="speech" data-lang="speech">Speech</label>
+  <select id="speech">
+    <option value="" data-lang="select">Select</option>
+    <option value="excessive" data-lang="speech_excessive">Excessive, Fast</option>
+    <option value="moderate" data-lang="speech_moderate">Moderate, Medium</option>
+    <option value="less" data-lang="speech_less">Less, Slow</option>
+  </select>
+
+  <label for="voice" data-lang="voice">Quality of voice</label>
+  <select id="voice">
+    <option value="" data-lang="select">Select</option>
+    <option value="low" data-lang="voice_low">Low, weak, feeble</option>
+    <option value="broken" data-lang="voice_broken">Broken, rough, deep</option>
+    <option value="good" data-lang="voice_good">Good tone, pleasing, clear</option>
+    <option value="high" data-lang="voice_high">High pitched, loud, sharp</option>
+  </select>
+
+  <label for="movements" data-lang="movements">Voluntary and involuntary movements</label>
+  <select id="movements">
+    <option value="" data-lang="select">Select</option>
+    <option value="hand" data-lang="move_hand">Hand movement</option>
+    <option value="leg" data-lang="move_leg">Leg movements</option>
+    <option value="eyebrow" data-lang="move_eyebrow">Eyebrow</option>
+    <option value="shoulder" data-lang="move_shoulder">Shoulder</option>
+    <option value="overall" data-lang="move_overall">Overall</option>
+  </select>
+
+  <label for="mentalStrength" data-lang="mentalStrength">Mental strength</label>
+  <select id="mentalStrength">
+    <option value="" data-lang="select">Select</option>
+    <option value="counselled" data-lang="mental_counselled">Get stressed/disturbed frequently and can be counselled by others</option>
+    <option value="overcomeTime" data-lang="mental_overcomeTime">Get stressed/disturbed easily and overcome it by own / with some time</option>
+    <option value="overcomeOwn" data-lang="mental_overcomeOwn">Get stressed with difficulty and can overcome on own</option>
+    <option value="cannotCounsel" data-lang="mental_cannotCounsel">Get stressed easily and cannot be counseled easily by others</option>
+  </select>
+
+  <label for="memorize" data-lang="memorize">How quickly you can memorize things?</label>
+  <select id="memorize">
+    <option value="" data-lang="select">Select</option>
+    <option value="quickly" data-lang="memorize_quickly">Quickly</option>
+    <option value="moderately" data-lang="memorize_moderately">Moderately</option>
+    <option value="slowly" data-lang="memorize_slowly">Slowly</option>
+  </select>
+
+  <label for="retention" data-lang="retention">How good is your retention power?</label>
+  <select id="retention">
+    <option value="" data-lang="select">Select</option>
+    <option value="good" data-lang="retention_good">Good</option>
+    <option value="medium" data-lang="retention_medium">Medium</option>
+    <option value="poor" data-lang="retention_poor">Poor</option>
+  </select>
+
+  <label for="interaction" data-lang="interaction">Do you like to</label>
+  <select id="interaction">
+    <option value="" data-lang="select">Select</option>
+    <option value="moveInteract" data-lang="interact_move">Move around and interact with people and explore</option>
+    <option value="seated" data-lang="interact_seated">Be seated and keep confined to own work</option>
+    <option value="moderate" data-lang="interact_moderate">Move around moderately and not sit for very long hours</option>
+  </select>
+</div>
+
+<!-- Current Alternative Therapy Usage -->
+<div class="section-title" data-lang="section_therapy">Current Alternative Therapy Usage</div>
+<div class="grid-1">
+  <select id="currentTherapy">
+    <option value="" data-lang="selectTherapy">Select Current Therapy</option>
+    <option data-lang="therapy_yoga">Yoga</option>
+    <option data-lang="therapy_meditation">Meditation</option>
+    <option data-lang="therapy_ayurveda">Ayurveda</option>
+    <option data-lang="therapy_homeopathy">Homeopathy</option>
+    <option data-lang="therapy_naturopathy">Naturopathy</option>
+    <option data-lang="therapy_unani">Unani</option>
+    <option data-lang="therapy_siddha">Siddha</option>
+  </select>
+</div>
+
+<div class="grid-1">
+  <textarea
+    id="therapyDetails"
+    rows="4"
+    data-lang-placeholder="therapy_placeholder"
+    placeholder="Please specify details about current therapies and their effectiveness"></textarea>
+</div>
+
+<div class="form-buttons">
+  <button type="button" class="btn-prev" id="prevBtn" data-lang="prev_btn">← Previous</button>
+  <button type="button" class="btn-next" id="nextBtn" data-lang="next_btn">Save & Next →</button>
+</div>
+
+</div>
+</div>
+
+<script>
+const API_BASE = "http://localhost:5000/api/patients";
+
+const translations = {
+  en: {
+    page_title: "Patient Registration",
+    tab1: "Personal Information",
+    tab2: "Lifestyle & Social History",
+    tab3: "Medical History",
+    tab4: "Current Health Status",
+    tab5: "AYUSH Profile",
+    tab6: "Image Capture",
+    form_title: "AYUSH Profile",
+    form_subtitle: "Please fill out the details below",
+    section_ayush: "AYUSH Assessment",
+    section_therapy: "Current Alternative Therapy Usage",
+    bodyBuild: "Body build",
+    body_weakly: "Weakly developed with thin musculature",
+    body_moderate: "Moderately developed with soft and loosely knitted musculature",
+    body_well: "Well developed with firmly knitted musculature",
+    nail: "Nail colour & Size",
+    nail_reddish: "Reddish, Small",
+    nail_pale: "Pale, Medium",
+    nail_pink: "Pink, Large",
+    scalpHair: "Scalp hair is prone to",
+    hair_graying: "Graying",
+    hair_falling: "Falling",
+    hair_breaking: "Breaking",
+    hair_split: "Split at ends",
+    hair_none: "None",
+    observe: "Do you observe any of these",
+    observe_nails: "Nails",
+    observe_palm: "Palm",
+    observe_sole: "Sole",
+    observe_lips: "Lips",
+    appetite: "Appetite",
+    appetite_regular: "Regular, Frequent",
+    appetite_irregularInfrequent: "Irregular, Infrequent",
+    appetite_irregularFrequent: "Irregular, Frequent",
+    bodyTemp: "Body Temperature",
+    temp_higher: "Higher compared to others",
+    temp_lower: "Lower compared to others",
+    temp_average: "Average",
+    temp_variable: "Variable",
+    sleep: "Sleep",
+    sleep_heavy: "Immediately get sleep, Heavy sleep",
+    sleep_moderate: "After few minutes/reading, moderate sleep",
+    sleep_less: "It takes long time to sleep, less sleep",
+    bowel: "Bowel habits",
+    bowel_regular: "Regular",
+    bowel_irregular: "Irregular",
+    bowel_occasionally: "Occasionally irregular",
+    bodyWeight: "Body weight changes",
+    weight_easy: "Gain weight easily and lose easily",
+    weight_difficulty: "Difficulty in gaining weight",
+    weight_hard: "Gain and lose with difficulty",
+    speech: "Speech",
+    speech_excessive: "Excessive, Fast",
+    speech_moderate: "Moderate, Medium",
+    speech_less: "Less, Slow",
+    voice: "Quality of voice",
+    voice_low: "Low, weak, feeble",
+    voice_broken: "Broken, rough, deep",
+    voice_good: "Good tone, pleasing, clear",
+    voice_high: "High pitched, loud, sharp",
+    movements: "Voluntary and involuntary movements",
+    move_hand: "Hand movement",
+    move_leg: "Leg movements",
+    move_eyebrow: "Eyebrow",
+    move_shoulder: "Shoulder",
+    move_overall: "Overall",
+    mentalStrength: "Mental strength",
+    mental_counselled: "Get stressed/disturbed frequently and can be counselled by others",
+    mental_overcomeTime: "Get stressed/disturbed easily and overcome it by own / with some time",
+    mental_overcomeOwn: "Get stressed with difficulty and can overcome on own",
+    mental_cannotCounsel: "Get stressed easily and cannot be counseled easily by others",
+    memorize: "How quickly you can memorize things?",
+    memorize_quickly: "Quickly",
+    memorize_moderately: "Moderately",
+    memorize_slowly: "Slowly",
+    retention: "How good is your retention power?",
+    retention_good: "Good",
+    retention_medium: "Medium",
+    retention_poor: "Poor",
+    interaction: "Do you like to",
+    interact_move: "Move around and interact with people and explore",
+    interact_seated: "Be seated and keep confined to own work",
+    interact_moderate: "Move around moderately and not sit for very long hours",
+    select: "Select",
+    selectTherapy: "Select Current Therapy",
+    therapy_yoga: "Yoga",
+    therapy_meditation: "Meditation",
+    therapy_ayurveda: "Ayurveda",
+    therapy_homeopathy: "Homeopathy",
+    therapy_naturopathy: "Naturopathy",
+    therapy_unani: "Unani",
+    therapy_siddha: "Siddha",
+    therapy_placeholder: "Please specify details about current therapies and their effectiveness",
+    prev_btn: "← Previous",
+    next_btn: "Save & Next →"
+  },
+  kn: {
+  page_title: "ರೋಗಿ ನೋಂದಣಿ",
+  tab1: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+  tab2: "ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+  tab3: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+  tab4: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+  tab5: "AYUSH ಪ್ರೊಫೈಲ್",
+  tab6: "ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+
+  form_title: "AYUSH ಪ್ರೊಫೈಲ್",
+  form_subtitle: "ದಯವಿಟ್ಟು ಕೆಳಗಿನ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+
+  section_ayush: "AYUSH ಮೌಲ್ಯಮಾಪನ",
+  section_therapy: "ಪ್ರಸ್ತುತ ಪರ್ಯಾಯ ಚಿಕಿತ್ಸೆಯ ಬಳಕೆ",
+
+  bodyBuild: "ದೇಹದ ನಿರ್ಮಾಣ",
+  body_weakly: "ಸಣ್ಣ ಮತ್ತು ತೆಳುವಾದ ಸ್ನಾಯುಗಳೊಂದಿಗೆ ದುರ್ಬಲವಾಗಿ ಅಭಿವೃದ್ಧಿಯಾಗಿರುವುದು",
+  body_moderate: "ಮಧ್ಯಮವಾಗಿ ಅಭಿವೃದ್ಧಿಯಾಗಿದ್ದು, ಮೃದುವಾದ ಮತ್ತು ಸಡಿಲ ಸ್ನಾಯುಗಳೊಂದಿಗೆ",
+  body_well: "ದೃಢವಾಗಿ ಜೋಡಿಸಲಾದ ಸ್ನಾಯುಗಳೊಂದಿಗೆ ಚೆನ್ನಾಗಿ ಅಭಿವೃದ್ಧಿಯಾಗಿರುವುದು",
+
+  nail: "ನಖಗಳ ಬಣ್ಣ ಮತ್ತು ಗಾತ್ರ",
+  nail_reddish: "ಕೆಂಪು, ಸಣ್ಣ",
+  nail_pale: "ಬೆಳಗಿನ, ಮಧ್ಯಮ",
+  nail_pink: "ಗುಲಾಬಿ, ದೊಡ್ಡ",
+
+  scalpHair: "ತಲೆ ಕೂದಲಿಗೆ ಹೊಂದಿರುವ ಸಮಸ್ಯೆಗಳು",
+  hair_graying: "ಬೆಳ್ಳಗಾಗುವುದು",
+  hair_falling: "ಉದುರುವುದು",
+  hair_breaking: "ಮುರಿಯುವುದು",
+  hair_split: "ಅಂತ್ಯದಲ್ಲಿ ಚೀರುವುದು",
+  hair_none: "ಯಾವುದೂ ಇಲ್ಲ",
+
+  observe: "ನೀವು ಇವುಗಳಲ್ಲಿ ಯಾವುದನ್ನಾದರೂ ಗಮನಿಸುತ್ತೀರಾ?",
+  observe_nails: "ನಖಗಳು",
+  observe_palm: "ಹಸ್ತತಳ",
+  observe_sole: "ಪಾದತಳ",
+  observe_lips: "ತುಟಿಗಳು",
+
+  appetite: "ಭುಕುತಿ",
+  appetite_regular: "ನಿಯಮಿತ, ಹೆಚ್ಚಾಗಿ",
+  appetite_irregularInfrequent: "ಅನಿಯಮಿತ, ಅಪರೂಪವಾಗಿ",
+  appetite_irregularFrequent: "ಅನಿಯಮಿತ, ಹೆಚ್ಚಾಗಿ",
+
+  bodyTemp: "ದೇಹದ ತಾಪಮಾನ",
+  temp_higher: "ಇತರರಿಗಿಂತ ಹೆಚ್ಚು",
+  temp_lower: "ಇತರರಿಗಿಂತ ಕಡಿಮೆ",
+  temp_average: "ಸರಾಸರಿ",
+  temp_variable: "ಬದಲಾಗುವ",
+
+  sleep: "ನಿದ್ರೆ",
+  sleep_heavy: "ತಕ್ಷಣ ನಿದ್ರೆ, ಆಳವಾದ ನಿದ್ರೆ",
+  sleep_moderate: "ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ, ಮಧ್ಯಮ ನಿದ್ರೆ",
+  sleep_less: "ನಿದ್ರೆ ಬರಲು ಹೆಚ್ಚು ಸಮಯ, ಕಡಿಮೆ ನಿದ್ರೆ",
+
+  bowel: "ಮಲವಿಸರ್ಜನೆ ಅಭ್ಯಾಸ",
+  bowel_regular: "ನಿಯಮಿತ",
+  bowel_irregular: "ಅನಿಯಮಿತ",
+  bowel_occasionally: "ಕೆಲವೊಮ್ಮೆ ಅನಿಯಮಿತ",
+
+  bodyWeight: "ದೇಹ ತೂಕದ ಬದಲಾವಣೆ",
+  weight_easy: "ತೂಕ ಸುಲಭವಾಗಿ ಹೆಚ್ಚುವುದು ಮತ್ತು ಕಡಿಮೆಯಾಗುವುದು",
+  weight_difficulty: "ತೂಕ ಹೆಚ್ಚಿಸಲು ಕಷ್ಟ",
+  weight_hard: "ತೂಕ ಹೆಚ್ಚಲು ಮತ್ತು ಕಡಿಮೆಯಾಗಲು ಕಷ್ಟ",
+
+  speech: "ಮಾತನಾಡುವ ಶೈಲಿ",
+  speech_excessive: "ಹೆಚ್ಚು, ವೇಗವಾಗಿ",
+  speech_moderate: "ಮಧ್ಯಮ",
+  speech_less: "ಕಡಿಮೆ, ನಿಧಾನವಾಗಿ",
+
+  voice: "ಧ್ವನಿಯ ಗುಣಮಟ್ಟ",
+  voice_low: "ಕಡಿಮೆ, ದುರ್ಬಲ",
+  voice_broken: "ಮುರಿದ, ಕರಕಶ, ಗಂಭೀರ",
+  voice_good: "ಉತ್ತಮ ಧ್ವನಿ, ಸ್ಪಷ್ಟ",
+  voice_high: "ಎತ್ತರದ, ತೀಕ್ಷ್ಣ",
+
+  movements: "ಸ್ವಯಂಪ್ರೇರಿತ ಮತ್ತು ಅಸ್ವಯಂಪ್ರೇರಿತ ಚಲನೆಗಳು",
+  move_hand: "ಕೈ ಚಲನೆ",
+  move_leg: "ಕಾಲು ಚಲನೆ",
+  move_eyebrow: "ಭ್ರೂ",
+  move_shoulder: "ಭುಜ",
+  move_overall: "ಒಟ್ಟಾರೆ",
+
+  mentalStrength: "ಮಾನಸಿಕ ಶಕ್ತಿ",
+  mental_counselled: "ಸಾಮಾನ್ಯವಾಗಿ ಒತ್ತಡಕ್ಕೊಳಗಾಗುತ್ತಾರೆ ಮತ್ತು ಇತರರಿಂದ ಸಲಹೆ ಪಡೆಯಬಹುದು",
+  mental_overcomeTime: "ಸುಲಭವಾಗಿ ಒತ್ತಡಕ್ಕೊಳಗಾಗುತ್ತಾರೆ ಮತ್ತು ಸಮಯದೊಂದಿಗೆ ತಾವು ಸರಿಪಡಿಸಿಕೊಳ್ಳುತ್ತಾರೆ",
+  mental_overcomeOwn: "ಅಪರೂಪವಾಗಿ ಒತ್ತಡಕ್ಕೊಳಗಾಗಿ ಸ್ವತಃ ಸಮಾಧಾನಪಡಿಸಿಕೊಳ್ಳುತ್ತಾರೆ",
+  mental_cannotCounsel: "ಸುಲಭವಾಗಿ ಒತ್ತಡಕ್ಕೊಳಗಾಗುತ್ತಾರೆ ಮತ್ತು ಸಲಹೆ ಸ್ವೀಕರಿಸಲು ಕಷ್ಟ",
+
+  memorize: "ನೀವು ಎಷ್ಟು ಬೇಗ ನೆನಪಿಸಿಕೊಳ್ಳುತ್ತೀರಿ?",
+  memorize_quickly: "ತ್ವರಿತವಾಗಿ",
+  memorize_moderately: "ಮಧ್ಯಮವಾಗಿ",
+  memorize_slowly: "ನಿಧಾನವಾಗಿ",
+
+  retention: "ನಿಮ್ಮ ನೆನಪಿನ ಶಕ್ತಿ ಹೇಗಿದೆ?",
+  retention_good: "ಉತ್ತಮ",
+  retention_medium: "ಮಧ್ಯಮ",
+  retention_poor: "ಕಡಿಮೆ",
+
+  interaction: "ನೀವು ಯಾವ ರೀತಿಯ ಚಟುವಟಿಕೆಯನ್ನು ಇಷ್ಟಪಡುತ್ತೀರಿ?",
+  interact_move: "ಜನರೊಂದಿಗೆ ಸಂವಹನ ಮಾಡಿ ಸುತ್ತಾಡುವುದು",
+  interact_seated: "ಕುಳಿತು ಸ್ವಂತ ಕೆಲಸದಲ್ಲಿ ತೊಡಗಿರುವುದು",
+  interact_moderate: "ಮಧ್ಯಮವಾಗಿ ಚಲಿಸುವುದು",
+
+  select: "ಆಯ್ಕೆಮಾಡಿ",
+  selectTherapy: "ಪ್ರಸ್ತುತ ಚಿಕಿತ್ಸೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+
+  therapy_yoga: "ಯೋಗ",
+  therapy_meditation: "ಧ್ಯಾನ",
+  therapy_ayurveda: "ಆಯುರ್ವೇದ",
+  therapy_homeopathy: "ಹೋಮಿಯೋಪಥಿ",
+  therapy_naturopathy: "ನೈಸರ್ಗಿಕ ಚಿಕಿತ್ಸಾ ಪದ್ಧತಿ",
+  therapy_unani: "ಯುನಾನಿ",
+  therapy_siddha: "ಸಿದ್ಧ",
+
+  therapy_placeholder: "ದಯವಿಟ್ಟು ಪ್ರಸ್ತುತ ಚಿಕಿತ್ಸೆಗಳ ವಿವರ ಮತ್ತು ಪರಿಣಾಮಕಾರಿತ್ವವನ್ನು ವಿವರಿಸಿ",
+
+  prev_btn: "← ಹಿಂದಿನದು",
+  next_btn: "ಉಳಿಸಿ & ಮುಂದಕ್ಕೆ →",
+  fill_all_fields: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ AYUSH ಪ್ರೊಫೈಲ್ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+  save_error: "AYUSH प्रोफ़ाइल सहेजने में विफल"
+
+},
+
+  hi: {
+    page_title: "रोगी पंजीकरण",
+    tab1: "व्यक्तिगत जानकारी",
+    tab2: "जीवनशैली और सामाजिक इतिहास",
+    tab3: "चिकित्सा इतिहास",
+    tab4: "वर्तमान स्वास्थ्य स्थिति",
+    tab5: "AYUSH प्रोफ़ाइल",
+    tab6: "छवि कैप्चर",
+    form_title: "AYUSH प्रोफ़ाइल",
+    form_subtitle: "कृपया नीचे दिए गए विवरण भरें",
+    section_ayush: "AYUSH मूल्यांकन",
+    section_therapy: "वर्तमान वैकल्पिक चिकित्सा उपयोग",
+    bodyBuild: "शरीर निर्माण",
+    body_weakly: "पतली मांसपेशियों के साथ कमजोर विकास",
+    body_moderate: "मध्यम रूप से विकसित, नरम और ढीली मांसपेशियों के साथ",
+    body_well: "मजबूत और अच्छी तरह से गठित मांसपेशियों के साथ विकसित",
+    nail: "नाखून का रंग और आकार",
+    nail_reddish: "लाल, छोटा",
+    nail_pale: "फिक्का, मध्यम",
+    nail_pink: "गुलाबी, बड़ा",
+    scalpHair: "बालों का झड़ना / स्थिति",
+    hair_graying: "सफेद होना",
+    hair_falling: "गिरना",
+    hair_breaking: "टूटना",
+    hair_split: "सिरे पर फटना",
+    hair_none: "कोई नहीं",
+    observe: "क्या आप इनमें से किसी को देखते हैं",
+    observe_nails: "नाखून",
+    observe_palm: "हाथ की हथेली",
+    observe_sole: "पैर की तली",
+    observe_lips: "होंठ",
+    appetite: "भूख",
+    appetite_regular: "नियमित, अक्सर",
+    appetite_irregularInfrequent: "अनियमित, कम बार",
+    appetite_irregularFrequent: "अनियमित, अक्सर",
+    bodyTemp: "शरीर का तापमान",
+    temp_higher: "दूसरों की तुलना में अधिक",
+    temp_lower: "दूसरों की तुलना में कम",
+    temp_average: "औसत",
+    temp_variable: "परिवर्तनीय",
+    sleep: "नींद",
+    sleep_heavy: "तुरंत सो जाना, गहरी नींद",
+    sleep_moderate: "कुछ मिनटों / पढ़ाई के बाद, मध्यम नींद",
+    sleep_less: "सोने में लंबा समय लगता है, कम नींद",
+    bowel: "पाचन आदतें",
+    bowel_regular: "नियमित",
+    bowel_irregular: "अनियमित",
+    bowel_occasionally: "कभी-कभी अनियमित",
+    bodyWeight: "वजन में परिवर्तन",
+    weight_easy: "आसानी से वजन बढ़ना और घटना",
+    weight_difficulty: "वजन बढ़ाने में कठिनाई",
+    weight_hard: "मुश्किल से वजन बढ़ना और घटना",
+    speech: "बोलने का तरीका",
+    speech_excessive: "अधिक, तेज़",
+    speech_moderate: "मध्यम, सामान्य",
+    speech_less: "कम, धीमा",
+    voice: "आवाज की गुणवत्ता",
+    voice_low: "कम, कमजोर, फीकी",
+    voice_broken: "टूटी, खुरदरी, गहरी",
+    voice_good: "अच्छा स्वर, सुखद, स्पष्ट",
+    voice_high: "ऊँची, तेज़, तीव्र",
+    movements: "स्वेच्छा और अनैच्छिक गतिविधियाँ",
+    move_hand: "हाथ की गतिविधियाँ",
+    move_leg: "पाँव की गतिविधियाँ",
+    move_eyebrow: "भौंह",
+    move_shoulder: "कंधा",
+    move_overall: "कुल मिलाकर",
+    mentalStrength: "मानसिक शक्ति",
+    mental_counselled: "अक्सर तनावग्रस्त और दूसरों द्वारा मार्गदर्शन किया जा सकता है",
+    mental_overcomeTime: "आसान तनाव और समय / स्वयं से पार पा सकते हैं",
+    mental_overcomeOwn: "कठिन तनाव और स्वयं पार पा सकते हैं",
+    mental_cannotCounsel: "तनाव आसान, दूसरों द्वारा मार्गदर्शन नहीं किया जा सकता",
+    memorize: "आप कितनी जल्दी याद कर सकते हैं?",
+    memorize_quickly: "जल्दी",
+    memorize_moderately: "मध्यम",
+    memorize_slowly: "धीरे",
+    retention: "आपकी स्मरण शक्ति कैसी है?",
+    retention_good: "अच्छी",
+    retention_medium: "मध्यम",
+    retention_poor: "कमज़ोर",
+    interaction: "आप किस प्रकार की गतिविधि पसंद करते हैं?",
+    interact_move: "लोगों से मिलना-जुलना और घूमना",
+    interact_seated: "बैठकर अपने कार्य में रहना",
+    interact_moderate: "मध्यम घूमना और लंबे समय तक न बैठना",
+    select: "चुनें",
+    selectTherapy: "वर्तमान चिकित्सा चुनें",
+    therapy_yoga: "योग",
+    therapy_meditation: "ध्यान",
+    therapy_ayurveda: "आयुर्वेद",
+    therapy_homeopathy: "होम्योपैथी",
+    therapy_naturopathy: "नैचुरोपैथी",
+    therapy_unani: "यूनानी",
+    therapy_siddha: "सिद्ध",
+    therapy_placeholder: "कृपया वर्तमान चिकित्सा और उनके प्रभावशीलता का विवरण दें",
+    prev_btn: "← पिछला",
+    next_btn: "सहेजें & आगे →",
+    fill_all_fields: "कृपया सभी AYUSH प्रोफ़ाइल फ़ील्ड भरें",
+    save_error: "AYUSH प्रोफ़ाइल सहेजने में विफल"
+  }
+};
+
+/* ================== LANGUAGE APPLY ================== */
+function applyLanguage() {
+  const lang = localStorage.getItem("language") || "en";
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    const key = el.dataset.lang;
+    if (translations[lang][key]) el.innerText = translations[lang][key];
+  });
+  document.querySelectorAll("[data-lang-placeholder]").forEach(el => {
+    const key = el.dataset.langPlaceholder;
+    if (translations[lang][key]) el.placeholder = translations[lang][key];
+  });
+  document.title = translations[lang].page_title;
+}
+
+window.addEventListener("load", () => {
+  applyLanguage();
+});
+</script>
+
+<script>
+
+function go(page) {
+  location.href = page;
+}
+
+/* Elements mapping */
+const fields = {
+  bodyBuild,
+  nail,
+  scalpHair,
+  observe,
+  appetite,
+  bodyTemp,
+  sleep,
+  bowel,
+  bodyWeight,
+  speech,
+  voice,
+  movements,
+  mentalStrength,
+  memorize,
+  retention,
+  interaction,
+  currentTherapy, 
+  therapyDetails
+};
+
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+/* LOAD STEP 6 */
+window.onload = async () => {
+  const patientId = localStorage.getItem("patientId");
+  if (!patientId) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/${patientId}`);
+    if (!res.ok) return;
+
+    const data = await res.json();
+    if (!data.step6) return;
+
+    Object.keys(fields).forEach(key => {
+      if (data.step6[key]) fields[key].value = data.step6[key];
+    });
+  } catch (err) {
+    console.error("Load step6 error:", err);
+  }
+};
+
+/* SAVE STEP 6 */
+nextBtn.onclick = async () => {
+  const patientId = localStorage.getItem("patientId");
+  if (!patientId) {
+    alert("Patient not found");
+    return;
+  }
+
+  let step6 = {};
+  let hasError = false;
+
+  Object.keys(fields).forEach(key => {
+    const el = fields[key];
+    el.style.borderColor = "#ccc";
+
+    if (!el.value || el.value.trim() === "") {
+      el.style.borderColor = "#ef4444";
+      hasError = true;
+    } else {
+      step6[key] = el.value.trim();
+    }
+  });
+
+  if (hasError) {
+  const lang = localStorage.getItem("language") || "en";
+  alert(translations[lang].fill_all_fields);
+  return;
+}
+
+
+  try {
+    const res = await fetch(`${API_BASE}/${patientId}/step6`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ step6 })
+    });
+
+    if (!res.ok) throw new Error();
+    go("consult7.html"); // move to Step 7
+
+  } catch (err) {
+    const lang = localStorage.getItem("language") || "en";
+alert(translations[lang].save_error);
+
+    console.error(err);
+  }
+};
+
+/* PREVIOUS */
+prevBtn.onclick = () => go("consult4.html");
+</script>
+
+
+</body>
+</html>

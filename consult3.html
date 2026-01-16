@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">Medical History</title>
+<link rel="stylesheet" href="consult.css">
+
+<style>
+.form-buttons{display:flex;justify-content:space-between;margin-top:20px;}
+.btn-prev{padding:12px 24px;background:#e5e7eb;border:none;border-radius:6px;font-weight:600;cursor:pointer;}
+.btn-next{padding:12px 24px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;}
+.inline-options label{margin-right:16px;}
+.hidden{display:none;}
+.error{color:red;font-size:12px;}
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+  <div class="page-title" data-lang="page_heading">Patient Registration</div>
+
+  <div class="tabs">
+    <div class="tab active" data-lang="tab_personal">Personal Information</div>
+    <div class="tab active" data-lang="tab_lifestyle">Lifestyle & Social History</div>
+    <div class="tab active" data-lang="tab_medical">Medical History</div>
+    <div class="tab" data-lang="tab_current">Current Health Status</div>
+    <div class="tab" data-lang="tab_ayush">AYUSH Profile</div>
+    <div class="tab" data-lang="tab_image">Image Capture</div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-title" data-lang="form_title">Medical History</div>
+    <div class="form-subtext" data-lang="form_subtitle">Please fill required details</div>
+
+    <div class="form-grid">
+
+      <div class="full">
+        <label data-lang="past_conditions">Past Medical Conditions *</label>
+        <div class="inline-options">
+          <label><input type="checkbox" class="pastConditions" value="Diabetes"> <span data-lang="diabetes">Diabetes</span></label>
+          <label><input type="checkbox" class="pastConditions" value="Hypertension"> <span data-lang="hypertension">Hypertension</span></label>
+          <label><input type="checkbox" class="pastConditions" value="Heart Disease"> <span data-lang="heart_disease">Heart Disease</span></label>
+          <label><input type="checkbox" class="pastConditions" value="Asthma"> <span data-lang="asthma">Asthma</span></label>
+          <label><input type="checkbox" id="pastOther" value="Others"> <span data-lang="others">Others</span></label>
+        </div>
+        <small class="error" id="pastConditionsError"></small>
+      </div>
+
+      <div class="full hidden" id="pastOtherBox">
+        <textarea id="pastConditionsDetails" data-lang-placeholder="other_conditions"></textarea>
+        <small class="error" id="pastOtherError"></small>
+      </div>
+
+      <div class="full">
+        <label data-lang="current_medications">Current Medications *</label>
+        <textarea id="currentMedications"></textarea>
+        <small class="error" id="currentMedError"></small>
+      </div>
+
+      <div class="full">
+        <label data-lang="past_surgeries">Past Surgeries *</label>
+        <textarea id="pastSurgeries"></textarea>
+        <small class="error" id="pastSurgError"></small>
+      </div>
+
+      <div class="full">
+        <label data-lang="food_allergies">Food Allergies *</label>
+        <textarea id="foodAllergies"></textarea>
+        <small class="error" id="foodAllergyError"></small>
+      </div>
+
+      <div class="full">
+        <label data-lang="drug_allergies">Drug Allergies *</label>
+        <textarea id="drugAllergies"></textarea>
+        <small class="error" id="drugAllergyError"></small>
+      </div>
+
+      <div class="full">
+        <label data-lang="env_allergies">Environmental Allergies *</label>
+        <textarea id="environmentAllergies"></textarea>
+        <small class="error" id="envAllergyError"></small>
+      </div>
+
+      <div class="full">
+        <label data-lang="family_history">Family History *</label>
+        <div class="inline-options">
+          <label><input type="checkbox" class="familyHistory" value="Cardiac Disease"> <span data-lang="cardiac">Cardiac Disease</span></label>
+          <label><input type="checkbox" class="familyHistory" value="Diabetes"> <span data-lang="diabetes">Diabetes</span></label>
+          <label><input type="checkbox" class="familyHistory" value="Cancer"> <span data-lang="cancer">Cancer</span></label>
+          <label><input type="checkbox" class="familyHistory" value="Genetic Disorders"> <span data-lang="genetic">Genetic Disorders</span></label>
+        </div>
+        <small class="error" id="familyHistoryError"></small>
+      </div>
+
+      <div class="full">
+        <textarea id="familyHistoryDetails" data-lang-placeholder="family_details"></textarea>
+        <small class="error" id="familyHistoryDetailsError"></small>
+      </div>
+
+    </div>
+
+    <div class="form-buttons">
+      <button class="btn-prev" onclick="location.href='consult2.html'" data-lang="prev_btn">← Previous</button>
+      <button class="btn-next" onclick="saveStep3()" data-lang="next_btn">Save & Next →</button>
+    </div>
+  </div>
+</div>
+<script>
+const translations = {
+  en: {
+    page_title: "Medical History",
+    page_heading: "Patient Registration",
+    tab_personal: "Personal Information",
+    tab_lifestyle: "Lifestyle & Social History",
+    tab_medical: "Medical History",
+    tab_current: "Current Health Status",
+    tab_ayush: "AYUSH Profile",
+    tab_image: "Image Capture",
+    form_title: "Medical History",
+    form_subtitle: "Please fill required details",
+    past_conditions: "Past Medical Conditions",
+    diabetes: "Diabetes",
+    hypertension: "Hypertension",
+    heart_disease: "Heart Disease",
+    asthma: "Asthma",
+    others: "Others",
+    other_conditions: "Specify other conditions",
+    current_medications: "Current Medications",
+    past_surgeries: "Past Surgeries",
+    food_allergies: "Food Allergies",
+    drug_allergies: "Drug Allergies",
+    env_allergies: "Environmental Allergies",
+    family_history: "Family History",
+    cardiac: "Cardiac Disease",
+    cancer: "Cancer",
+    genetic: "Genetic Disorders",
+    family_details: "Family history details",
+    prev_btn: "← Previous",
+    next_btn: "Save & Next →"
+  },
+
+  hi: {
+    page_title: "चिकित्सा इतिहास",
+    page_heading: "रोगी पंजीकरण",
+    tab_personal: "व्यक्तिगत जानकारी",
+    tab_lifestyle: "जीवनशैली और सामाजिक इतिहास",
+    tab_medical: "चिकित्सा इतिहास",
+    tab_current: "वर्तमान स्वास्थ्य स्थिति",
+    tab_ayush: "आयुष प्रोफ़ाइल",
+    tab_image: "छवि कैप्चर",
+    form_title: "चिकित्सा इतिहास",
+    form_subtitle: "कृपया आवश्यक विवरण भरें",
+    past_conditions: "पूर्व चिकित्सा स्थितियाँ",
+    diabetes: "मधुमेह",
+    hypertension: "उच्च रक्तचाप",
+    heart_disease: "हृदय रोग",
+    asthma: "दमा",
+    others: "अन्य",
+    other_conditions: "अन्य स्थितियाँ लिखें",
+    current_medications: "वर्तमान दवाएँ",
+    past_surgeries: "पिछली सर्जरी",
+    food_allergies: "खाद्य एलर्जी",
+    drug_allergies: "दवा एलर्जी",
+    env_allergies: "पर्यावरणीय एलर्जी",
+    family_history: "पारिवारिक इतिहास",
+    cardiac: "हृदय रोग",
+    cancer: "कैंसर",
+    genetic: "आनुवंशिक विकार",
+    family_details: "पारिवारिक इतिहास विवरण",
+    prev_btn: "← पिछला",
+    next_btn: "सहेजें और आगे →",
+    required: "आवश्यक", 
+    select_at_least_one: "कम से कम एक चुनें"
+  },
+
+  kn: {
+    page_title: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    page_heading: "ರೋಗಿ ನೋಂದಣಿ",
+    tab_personal: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+    tab_lifestyle: "ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    tab_medical: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    tab_current: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    tab_ayush: "ಆಯುಷ್ ಪ್ರೊಫೈಲ್",
+    tab_image: "ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+    form_title: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    form_subtitle: "ದಯವಿಟ್ಟು ಅಗತ್ಯ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+    past_conditions: "ಹಿಂದಿನ ವೈದ್ಯಕೀಯ ಸ್ಥಿತಿಗಳು",
+    diabetes: "ಮಧುಮೇಹ",
+    hypertension: "ರಕ್ತದೊತ್ತಡ",
+    heart_disease: "ಹೃದಯ ರೋಗ",
+    asthma: "ಆಸ್ತಮಾ",
+    others: "ಇತರೆ",
+    other_conditions: "ಇತರೆ ಸ್ಥಿತಿಗಳನ್ನು ಸೂಚಿಸಿ",
+    current_medications: "ಪ್ರಸ್ತುತ ಔಷಧಗಳು",
+    past_surgeries: "ಹಿಂದಿನ ಶಸ್ತ್ರಚಿಕಿತ್ಸೆಗಳು",
+    food_allergies: "ಆಹಾರ ಅಲರ್ಜಿ",
+    drug_allergies: "ಔಷಧ ಅಲರ್ಜಿ",
+    env_allergies: "ಪರಿಸರ ಅಲರ್ಜಿ",
+    family_history: "ಕುಟುಂಬ ಇತಿಹಾಸ",
+    cardiac: "ಹೃದಯ ರೋಗ",
+    cancer: "ಕ್ಯಾನ್ಸರ್",
+    genetic: "ಜನ್ಯು ಅಸ್ವಸ್ಥತೆಗಳು",
+    family_details: "ಕುಟುಂಬ ಇತಿಹಾಸ ವಿವರಗಳು",
+    prev_btn: "← ಹಿಂದಿನದು",
+    next_btn: "ಉಳಿಸಿ ಮುಂದುವರಿಸಿ →",
+    required: "ಅಗತ್ಯವಿದೆ", 
+    select_at_least_one: "ಕನಿಷ್ಠ ಒಂದು ಆಯ್ಕೆಮಾಡಿ"
+  }
+};
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const lang = localStorage.getItem("language") || "en";
+
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    const key = el.dataset.lang;
+    if (translations[lang][key]) el.innerText = translations[lang][key];
+  });
+
+  document.querySelectorAll("[data-lang-placeholder]").forEach(el => {
+    const key = el.dataset.langPlaceholder;
+    if (translations[lang][key]) el.placeholder = translations[lang][key];
+  });
+});
+</script>
+
+ 
+<script>
+const API_BASE = "http://localhost:5000/api/patients";
+ 
+/* SHOW / HIDE OTHER CONDITIONS */
+const pastOther = document.getElementById("pastOther");
+const pastOtherBox = document.getElementById("pastOtherBox");
+ 
+pastOther.addEventListener("change", () => {
+pastOtherBox.classList.toggle("hidden", !pastOther.checked);
+});
+ 
+/* LOAD STEP 3 (UNCHANGED) */
+window.onload = async () => {
+const patientId = localStorage.getItem("patientId");
+if (!patientId) return;
+ 
+try {
+const res = await fetch(`${API_BASE}/${patientId}`);
+if (!res.ok) return;
+ 
+const data = await res.json();
+if (!data.step3) return;
+ 
+const s = data.step3;
+ 
+(s.pastConditions || []).forEach(v => {
+document.querySelectorAll(".pastConditions").forEach(cb => {
+if (cb.value === v) cb.checked = true;
+});
+if (v === "Others") {
+pastOther.checked = true;
+pastOtherBox.classList.remove("hidden");
+}
+});
+ 
+pastConditionsDetails.value = s.pastConditionsDetails || "";
+currentMedications.value = s.currentMedications || "";
+pastSurgeries.value = s.pastSurgeries || "";
+ 
+foodAllergies.value = s.allergies?.food || "";
+drugAllergies.value = s.allergies?.drug || "";
+environmentAllergies.value = s.allergies?.environmental || "";
+ 
+(s.familyHistory || []).forEach(v => {
+document.querySelectorAll(".familyHistory").forEach(cb => {
+if (cb.value === v) cb.checked = true;
+});
+});
+ 
+familyHistoryDetails.value = s.familyHistoryDetails || "";
+} catch (err) {
+console.error("Load error:", err);
+}
+};
+ 
+/* VALIDATION (NEW) */
+function validateStep3(){
+  let ok = true;
+  const lang = localStorage.getItem("language") || "en"; // get selected language
+
+  // Clear all previous errors
+  document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+  // Past Conditions
+  const past = document.querySelectorAll(".pastConditions:checked");
+  if(past.length === 0){
+    pastConditionsError.textContent = translations[lang].select_at_least_one;
+    ok = false;
+  }
+
+  if(pastOther.checked && !pastConditionsDetails.value){
+    pastOtherError.textContent = translations[lang].required;
+    ok = false;
+  }
+
+  // Current Medications
+  if(!currentMedications.value){
+    currentMedError.textContent = translations[lang].required;
+    ok = false;
+  }
+
+  // Past Surgeries
+  if(!pastSurgeries.value){
+    pastSurgError.textContent = translations[lang].required;
+    ok = false;
+  }
+
+  // Allergies
+  if(!foodAllergies.value){
+    foodAllergyError.textContent = translations[lang].required;
+    ok = false;
+  }
+  if(!drugAllergies.value){
+    drugAllergyError.textContent = translations[lang].required;
+    ok = false;
+  }
+  if(!environmentAllergies.value){
+    envAllergyError.textContent = translations[lang].required;
+    ok = false;
+  }
+
+  // Family History
+  const family = document.querySelectorAll(".familyHistory:checked");
+  if(family.length === 0){
+    familyHistoryError.textContent = translations[lang].select_at_least_one;
+    ok = false;
+  }
+
+  if(!familyHistoryDetails.value){
+    familyHistoryDetailsError.textContent = translations[lang].required;
+    ok = false;
+  }
+
+  return ok;
+}
+
+ 
+/* SAVE STEP 3 (LOGIC UNCHANGED) */
+async function saveStep3() {
+if(!validateStep3()) return;
+ 
+const patientId = localStorage.getItem("patientId");
+if (!patientId) {
+alert("Patient not found");
+return;
+}
+ 
+const pastConditions = Array.from(
+document.querySelectorAll(".pastConditions:checked")
+).map(i => i.value);
+ 
+if (pastOther.checked && !pastConditions.includes("Others")) {
+pastConditions.push("Others");
+}
+ 
+const step3 = {
+pastConditions,
+pastConditionsDetails: pastConditionsDetails.value,
+currentMedications: currentMedications.value,
+pastSurgeries: pastSurgeries.value,
+allergies: {
+food: foodAllergies.value,
+drug: drugAllergies.value,
+environmental: environmentAllergies.value
+},
+familyHistory: Array.from(
+document.querySelectorAll(".familyHistory:checked")
+).map(i => i.value),
+familyHistoryDetails: familyHistoryDetails.value
+};
+ 
+try {
+const res = await fetch(`${API_BASE}/${patientId}/step3`, {
+method: "PUT",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ step3 })
+});
+ 
+if (!res.ok) throw new Error("Failed to save step3");
+ 
+location.href = "consult4.html";
+} catch (err) {
+alert("Server error");
+console.error(err);
+}
+}
+</script>
+ 
+</body>
+</html>

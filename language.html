@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome | Dr. ViKi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans', sans-serif; }
+    body {
+      background: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .language-container {
+      background: #ffffff;
+      width: 90%;
+      max-width: 420px;
+      padding: 40px 30px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .divider {
+      margin: 12px auto 20px;
+      height: 2px;
+      background: #0f766e;
+      width: 60%;
+    }
+    h1 { font-size: 24px; color: #0f766e; font-weight: 600; }
+    p { margin-bottom: 24px; color: #555; font-size: 15px; }
+    .languages {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .languages button {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #0f766e;
+      background: #fff;
+      color: #0f766e;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .languages button.active {
+      background: #0f766e;
+      color: #fff;
+    }
+    .continue-btn {
+      width: 100%;
+      padding: 12px;
+      background: #0f766e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+<div class="language-container">
+  <h1>Welcome to Dr. ViKi</h1>
+  <div class="divider"></div>
+  <p>Choose your preferred language</p>
+
+  <div class="languages">
+    <button onclick="selectLanguage('en', this)">English</button>
+    <button onclick="selectLanguage('hi', this)">हिंदी</button>
+    <button onclick="selectLanguage('kn', this)">ಕನ್ನಡ</button>
+  </div>
+
+  <button class="continue-btn" onclick="continueSite()">Continue →</button>
+</div>
+
+<script>
+  let selectedLang = null;
+
+  function selectLanguage(lang, btn) {
+    selectedLang = lang;
+    document.querySelectorAll(".languages button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  }
+
+  function continueSite() {
+    if (!selectedLang) {
+      alert("Please select a language");
+      return;
+    }
+    localStorage.setItem("language", selectedLang);
+    window.location.href = "index.html";
+  }
+</script>
+</body>
+</html>

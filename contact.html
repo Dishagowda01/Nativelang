@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title data-lang="page_title">Contact Us | Dr. ViKi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="consult.css" />
+
+  <style> /* ================================ CONTACT PAGE ================================ */ .contact-hero { background: linear-gradient(180deg, #0a7a6a 0%, #064f46 100%); padding: 80px 20px; text-align: center; color: #fff; } .contact-hero h1 { font-size: 36px; margin-bottom: 10px; } .contact-hero p { font-size: 16px; opacity: 0.9; } .contact-container { max-width: 1100px; margin: 60px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; } .contact-info h2, .contact-form h2 { font-size: 24px; margin-bottom: 20px; color: #064f46; } .contact-info p { margin-bottom: 12px; font-size: 15px; color: #333; } .contact-info strong { color: #0a7a6a; } .contact-form form { display: flex; flex-direction: column; gap: 14px; } .contact-form input, .contact-form textarea { padding: 12px 14px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; width: 100%; } .contact-form textarea { resize: none; height: 120px; } .contact-form button { margin-top: 10px; padding: 12px; border: none; border-radius: 30px; background-color: #0a7a6a; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; } #formStatus { margin-top: 12px; font-weight: 600; } @media (max-width: 768px) { .contact-container { grid-template-columns: 1fr; } .contact-hero h1 { font-size: 28px; } } </style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="contact-hero">
+  <h1 data-lang="contact_title">Contact Us</h1>
+  <p data-lang="contact_subtitle">We’re here to help you with Dr. ViKi</p>
+</section>
+
+<!-- CONTENT -->
+<section class="contact-container">
+
+  <!-- INFO -->
+  <div class="contact-info">
+    <h2 data-lang="get_in_touch">Get in Touch</h2>
+    <p><strong>Email:</strong> hello@drviki.com</p>
+    <p data-lang="response_time">Our team will get back to you within 24 hours.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="contact-form">
+    <h2 data-lang="send_message">Send Us a Message</h2>
+
+    <form id="contactForm">
+      <input type="text" data-lang-placeholder="name_placeholder" required />
+      <input type="email" data-lang-placeholder="email_placeholder" required />
+      <input type="text" data-lang-placeholder="subject_placeholder" />
+      <textarea data-lang-placeholder="message_placeholder" required></textarea>
+      <button type="submit" data-lang="submit_button">Submit</button>
+    </form>
+
+    <p id="formStatus"></p>
+  </div>
+
+</section>
+
+<footer style="text-align:center; padding:30px;">
+  <p data-lang="footer_text">© 2026 Dr. ViKi. All rights reserved.</p>
+</footer>
+
+<!-- 🌐 TRANSLATIONS -->
+<script>
+const translations = {
+  en: {
+    page_title: "Contact Us | Dr. ViKi",
+    contact_title: "Contact Us",
+    contact_subtitle: "We’re here to help you with Dr. ViKi",
+    get_in_touch: "Get in Touch",
+    response_time: "Our team will get back to you within 24 hours.",
+    send_message: "Send Us a Message",
+    name_placeholder: "Full Name",
+    email_placeholder: "Email Address",
+    subject_placeholder: "Subject",
+    message_placeholder: "Your Message",
+    submit_button: "Submit",
+    footer_text: "© 2026 Dr. ViKi. All rights reserved."
+  },
+
+  hi: {
+    page_title: "संपर्क करें | Dr. ViKi",
+    contact_title: "संपर्क करें",
+    contact_subtitle: "हम आपकी सहायता के लिए यहाँ हैं",
+    get_in_touch: "संपर्क करें",
+    response_time: "हमारी टीम 24 घंटे में उत्तर देगी।",
+    send_message: "संदेश भेजें",
+    name_placeholder: "पूरा नाम",
+    email_placeholder: "ईमेल",
+    subject_placeholder: "विषय",
+    message_placeholder: "आपका संदेश",
+    submit_button: "जमा करें",
+    footer_text: "© 2026 Dr. ViKi. सर्वाधिकार सुरक्षित।"
+  },
+
+  kn: {
+    page_title: "ಸಂಪರ್ಕಿಸಿ | Dr. ViKi",
+    contact_title: "ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ",
+    contact_subtitle: "Dr. ViKi ಬಗ್ಗೆ ನಿಮಗೆ ಸಹಾಯ ಮಾಡಲು ನಾವು ಇಲ್ಲಿದ್ದೇವೆ",
+    get_in_touch: "ಸಂಪರ್ಕದಲ್ಲಿರಿ",
+    response_time: "ನಮ್ಮ ತಂಡವು 24 ಗಂಟೆಗಳೊಳಗೆ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತದೆ.",
+    send_message: "ಸಂದೇಶ ಕಳುಹಿಸಿ",
+    name_placeholder: "ಪೂರ್ಣ ಹೆಸರು",
+    email_placeholder: "ಇಮೇಲ್",
+    subject_placeholder: "ವಿಷಯ",
+    message_placeholder: "ನಿಮ್ಮ ಸಂದೇಶ",
+    submit_button: "ಸಲ್ಲಿಸು",
+    footer_text: "© 2026 Dr. ViKi. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
+  }
+};
+</script>
+
+<!-- 🌐 APPLY LANGUAGE -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const lang = localStorage.getItem("language") || "en";
+
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    const key = el.dataset.lang;
+    if (translations[lang][key]) el.innerText = translations[lang][key];
+  });
+
+  document.querySelectorAll("[data-lang-placeholder]").forEach(el => {
+    const key = el.dataset.langPlaceholder;
+    if (translations[lang][key]) el.placeholder = translations[lang][key];
+  });
+});
+</script>
+
+</body>
+</html>

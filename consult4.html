@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="page_title">Current Health Status</title>
+
+<link rel="stylesheet" href="consult.css">
+
+<style>
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 22px; }
+.grid-1 { margin-bottom: 22px; }
+.section-title { font-size: 16px; font-weight: 600; margin: 28px 0 14px; }
+.subtitle { font-size: 13px; color: #666; margin-bottom: 22px; }
+input:disabled { background: #f4f6f8; color: #888; }
+.error { color: red; font-size: 12px; margin-top: 6px; display: block; }
+
+.form-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+.btn-prev { padding: 12px 24px; background: #e5e7eb; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn-next { padding: 12px 24px; background: #16a34a; color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn-next:hover { background: #15803d; }
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <div class="page-title" data-lang="page_heading">Patient Registration</div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" data-lang="tab_personal">Personal Information</div>
+    <div class="tab active" data-lang="tab_lifestyle">Lifestyle & Social History</div>
+    <div class="tab active" data-lang="tab_medical">Medical History</div>
+    <div class="tab active" data-lang="tab_current">Current Health Status</div>
+    <div class="tab" data-lang="tab_ayush">AYUSH Profile</div>
+    <div class="tab" data-lang="tab_image">Image Capture</div>
+  </div>
+
+  <div class="form-card">
+    <h3 data-lang="form_title">Current Health Status</h3>
+    <p class="subtitle" data-lang="form_subtitle">Please fill all required fields</p>
+
+    <!-- Vitals -->
+    <div class="grid-3">
+      <div>
+        <label data-lang="height">Height (cm) *</label>
+        <input type="number" id="height" data-lang-placeholder="enter_height">
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="weight">Weight (kg) *</label>
+        <input type="number" id="weight" data-lang-placeholder="enter_weight">
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <label data-lang="bmi">BMI</label>
+        <input type="text" id="bmi" disabled>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div>
+        <label data-lang="blood_pressure">Blood Pressure *</label>
+        <input type="text" id="bloodPressure" data-lang-placeholder="enter_blood">
+        <small class="error"></small>
+      </div>
+      <div>
+        <label data-lang="pulse_rate">Pulse Rate *</label>
+        <input type="text" id="pulseRate" data-lang-placeholder="enter_pulse">
+        <small class="error"></small>
+      </div>
+      <div>
+        <label data-lang="temperature">Temperature *</label>
+        <input type="text" id="temperature" data-lang-placeholder="enter_temp">
+        <small class="error"></small>
+      </div>
+    </div>
+
+    <div class="grid-1">
+      <label data-lang="symptoms">Present Symptoms *</label>
+      <textarea id="symptoms" data-lang-placeholder="enter_symptoms"></textarea>
+      <small class="error"></small>
+    </div>
+
+    <div class="grid-1">
+      <label data-lang="pain_areas">Pain Areas / Physical Discomfort *</label>
+      <textarea id="painAreas" data-lang-placeholder="enter_pain"></textarea>
+      <small class="error"></small>
+    </div>
+
+    <div class="grid-1" id="reproductiveSection">
+      <label data-lang="reproductive">Menstrual / Reproductive Health *</label>
+      <textarea id="reproductiveHealth" data-lang-placeholder="enter_reproductive"></textarea>
+      <small class="error"></small>
+    </div>
+
+    <div class="section-title" data-lang="mental_title">Mental Health Status</div>
+
+    <div class="grid-3">
+      <div>
+        <select id="stressLevel">
+          <option value="" data-lang="stress_placeholder">Stress Level *</option>
+          <option data-lang="low">Low</option>
+          <option data-lang="moderate">Moderate</option>
+          <option data-lang="high">High</option>
+        </select>
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <select id="depressionLevel">
+          <option value="" data-lang="depression_placeholder">Depression *</option>
+          <option data-lang="none">None</option>
+          <option data-lang="mild">Mild</option>
+          <option data-lang="moderate">Moderate</option>
+        </select>
+        <small class="error"></small>
+      </div>
+
+      <div>
+        <select id="anxietyLevel">
+          <option value="" data-lang="anxiety_placeholder">Anxiety *</option>
+          <option data-lang="none">None</option>
+          <option data-lang="mild">Mild</option>
+          <option data-lang="moderate">Moderate</option>
+        </select>
+        <small class="error"></small>
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button class="btn-prev" id="prevBtn" data-lang="prev_btn">← Previous</button>
+      <button class="btn-next" id="nextBtn" data-lang="next_btn">Save & Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🌐 TRANSLATIONS -->
+<script>
+const translations = {
+  en: {
+    page_title: "Current Health Status",
+  page_heading: "Patient Registration",
+    tab_personal: "Personal Information",
+    tab_lifestyle: "Lifestyle & Social History",
+    tab_medical: "Medical History",
+    tab_current: "Current Health Status",
+    tab_ayush: "AYUSH Profile",
+    tab_image: "Image Capture",
+    form_title: "Current Health Status",
+    form_subtitle: "Please fill all required fields",
+    height: "Height (cm)",
+    enter_height: "Enter height in cm",
+    weight: "Weight (kg)",
+    enter_weight: "Enter weight in kg",
+    bmi: "BMI",
+    blood_pressure: "Blood Pressure",
+    enter_blood: "Enter blood pressure",
+    pulse_rate: "Pulse Rate",
+    enter_pulse: "Enter pulse rate",
+    temperature: "Temperature",
+    enter_temp: "Enter temperature",
+    symptoms: "Present Symptoms",
+    enter_symptoms: "Describe symptoms",
+    pain_areas: "Pain Areas / Physical Discomfort",
+    enter_pain: "Enter pain areas",
+    reproductive: "Menstrual / Reproductive Health",
+    enter_reproductive: "Enter details",
+    mental_title: "Mental Health Status",
+    stress_placeholder: "Stress Level *",
+    low: "Low",
+    moderate: "Moderate",
+    high: "High",
+    depression_placeholder: "Depression *",
+    none: "None",
+    mild: "Mild",
+    anxiety_placeholder: "Anxiety *",
+    prev_btn: "← Previous",
+    next_btn: "Save & Next →",
+    err_required: "Required",
+    err_patient_not_found: "Patient not found",
+    err_server: "Server error"
+  },
+  hi: {
+  
+    page_title: "वर्तमान स्वास्थ्य स्थिति",
+  page_heading: "रोगी पंजीकरण",
+    tab_personal: "व्यक्तिगत जानकारी",
+    tab_lifestyle: "जीवनशैली और सामाजिक इतिहास",
+    tab_medical: "चिकित्सा इतिहास",
+    tab_current: "वर्तमान स्वास्थ्य स्थिति",
+    tab_ayush: "आयुष प्रोफ़ाइल",
+    tab_image: "छवि कैप्चर",
+    form_title: "वर्तमान स्वास्थ्य स्थिति",
+    form_subtitle: "कृपया सभी आवश्यक फ़ील्ड भरें",
+    height: "ऊँचाई (सेमी)",
+    enter_height: "ऊँचाई दर्ज करें",
+    weight: "वज़न (किग्रा)",
+    enter_weight: "वज़न दर्ज करें",
+    bmi: "बीएमआई",
+    blood_pressure: "रक्तचाप",
+    enter_blood: "रक्तचाप दर्ज करें",
+    pulse_rate: "नाड़ी दर",
+    enter_pulse: "नाड़ी दर दर्ज करें",
+    temperature: "तापमान",
+    enter_temp: "तापमान दर्ज करें",
+    symptoms: "वर्तमान लक्षण",
+    enter_symptoms: "लक्षण लिखें",
+    pain_areas: "दर्द के क्षेत्र / शारीरिक असुविधा",
+    enter_pain: "दर्द क्षेत्र दर्ज करें",
+    reproductive: "मासिक / प्रजनन स्वास्थ्य",
+    enter_reproductive: "विवरण दर्ज करें",
+    mental_title: "मानसिक स्वास्थ्य स्थिति",
+    stress_placeholder: "तनाव स्तर *",
+    low: "कम",
+    moderate: "मध्यम",
+    high: "उच्च",
+    depression_placeholder: "अवसाद *",
+    none: "नहीं",
+    mild: "हल्का",
+    anxiety_placeholder: "चिंता *",
+    prev_btn: "← पिछला",
+    next_btn: "सहेजें और आगे →",
+    err_required: "आवश्यक",
+    err_patient_not_found: "रोगी नहीं मिला",
+    err_server: "सर्वर त्रुटि"
+  },
+  kn: {
+   page_title: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+  page_heading: "ರೋಗಿ ನೋಂದಣಿ",
+    tab_personal: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+    tab_lifestyle: "ಜೀವನಶೈಲಿ ಮತ್ತು ಸಾಮಾಜಿಕ ಇತಿಹಾಸ",
+    tab_medical: "ವೈದ್ಯಕೀಯ ಇತಿಹಾಸ",
+    tab_current: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    tab_ayush: "ಆಯುಷ್ ಪ್ರೊಫೈಲ್",
+    tab_image: "ಚಿತ್ರ ಸೆರೆಹಿಡಿತ",
+    form_title: "ಪ್ರಸ್ತುತ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    form_subtitle: "ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+    height: "ಎತ್ತರ (ಸೆಂಮೀ)",
+    enter_height: "ಎತ್ತರ ನಮೂದಿಸಿ",
+    weight: "ತೂಕ (ಕಿ.ಗ್ರಾ)",
+    enter_weight: "ತೂಕ ನಮೂದಿಸಿ",
+    bmi: "ಬಿಎಂಐ",
+    blood_pressure: "ರಕ್ತದ ಒತ್ತಡ",
+    enter_blood: "ರಕ್ತದ ಒತ್ತಡ ನಮೂದಿಸಿ",
+    pulse_rate: "ನಾಳಿ ದರ",
+    enter_pulse: "ನಾಳಿ ದರ ನಮೂದಿಸಿ",
+    temperature: "ತಾಪಮಾನ",
+    enter_temp: "ತಾಪಮಾನ ನಮೂದಿಸಿ",
+    symptoms: "ಪ್ರಸ್ತುತ ಲಕ್ಷಣಗಳು",
+    enter_symptoms: "ಲಕ್ಷಣಗಳನ್ನು ನಮೂದಿಸಿ",
+    pain_areas: "ನೋವು ಪ್ರದೇಶಗಳು / ದೈಹಿಕ ಅಸೌಕರ್ಯ",
+    enter_pain: "ನೋವು ಪ್ರದೇಶಗಳನ್ನು ನಮೂದಿಸಿ",
+    reproductive: "ಮಾಸಿಕ / ಪ್ರಜನನ ಆರೋಗ್ಯ",
+    enter_reproductive: "ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ",
+    mental_title: "ಮಾನಸಿಕ ಆರೋಗ್ಯ ಸ್ಥಿತಿ",
+    stress_placeholder: "ಮನೋದಬ್ಬಳಿ ಮಟ್ಟ *",
+    low: "ಕಡಿಮೆ",
+    moderate: "ಮಧ್ಯಮ",
+    high: "ಅಧಿಕ",
+    depression_placeholder: "ಅವಸಾದ *",
+    none: "ಇಲ್ಲ",
+    mild: "ಸಾಮಾನ್ಯ",
+    anxiety_placeholder: "ಚಿಂತೆ *",
+    prev_btn: "← ಹಿಂದಿನದು",
+    next_btn: "ಉಳಿಸಿ ಮುಂದುವರಿಸಿ →",
+    err_required: "ಅಗತ್ಯ",
+    err_patient_not_found: "ರೋಗಿ ಕಂಡುಬಂದಿಲ್ಲ",
+    err_server: "ಸರ್ವರ್ ದೋಷ"
+  }
+};
+</script>
+
+<!-- 🌐 APPLY LANGUAGE -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const lang = localStorage.getItem("language") || "en";
+
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    const key = el.dataset.lang;
+    if (translations[lang][key]) el.innerText = translations[lang][key];
+  });
+
+  document.querySelectorAll("[data-lang-placeholder]").forEach(el => {
+    const key = el.dataset.langPlaceholder;
+    if (translations[lang][key]) el.placeholder = translations[lang][key];
+  });
+});
+</script>
+
+<script>
+const API_BASE = "http://localhost:5000/api/patients";
+const reproductiveSection = document.getElementById("reproductiveSection");
+const gender = localStorage.getItem("gender");
+
+if (gender !== "Female") {
+  reproductiveSection.style.display = "none";
+}
+
+/* BMI calculation */
+function calcBMI(){
+  if(height.value && weight.value){
+    bmi.value = (weight.value / ((height.value/100) ** 2)).toFixed(1);
+  }
+}
+height.oninput = calcBMI;
+weight.oninput = calcBMI;
+
+/* LOAD STEP 4 */
+document.addEventListener("DOMContentLoaded", async () => {
+  const patientId = localStorage.getItem("patientId");
+  if (!patientId) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/${patientId}`);
+    if (!res.ok) return;
+
+    const data = await res.json();
+    if (!data.step4) return;
+
+    const s = data.step4;
+
+    height.value = s.vitals?.height || "";
+    weight.value = s.vitals?.weight || "";
+    bmi.value = s.vitals?.bmi || "";
+    bloodPressure.value = s.vitals?.bloodPressure || "";
+    pulseRate.value = s.vitals?.pulseRate || "";
+    temperature.value = s.vitals?.temperature || "";
+    symptoms.value = s.symptoms || "";
+    painAreas.value = s.painAreas || "";
+    reproductiveHealth.value = s.reproductiveHealth || "";
+    stressLevel.value = s.mentalHealth?.stress || "";
+    depressionLevel.value = s.mentalHealth?.depression || "";
+    anxietyLevel.value = s.mentalHealth?.anxiety || "";
+
+    calcBMI();
+  } catch (err) {
+    console.error("Load error:", err);
+  }
+});
+
+/* VALIDATION */
+function validate(){
+  let ok = true;
+  const lang = localStorage.getItem("language") || "en";
+  const t = translations[lang];
+
+  document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+  if(!height.value){ height.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!weight.value){ weight.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!bloodPressure.value){ bloodPressure.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!pulseRate.value){ pulseRate.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!temperature.value){ temperature.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!symptoms.value){ symptoms.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!painAreas.value){ painAreas.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(reproductiveSection.style.display !== "none" && !reproductiveHealth.value){ reproductiveHealth.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!stressLevel.value){ stressLevel.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!depressionLevel.value){ depressionLevel.nextElementSibling.textContent = t.err_required; ok=false; }
+  if(!anxietyLevel.value){ anxietyLevel.nextElementSibling.textContent = t.err_required; ok=false; }
+
+  return ok;
+}
+
+/* SAVE STEP 4 */
+nextBtn.onclick = async () => {
+  if (!validate()) return;
+
+  const patientId = localStorage.getItem("patientId");
+  const t = translations[localStorage.getItem("language") || "en"];
+
+  if (!patientId) {
+    alert(t.err_patient_not_found);
+    return;
+  }
+
+  const step4 = {
+    vitals: {
+      height: height.value,
+      weight: weight.value,
+      bmi: bmi.value,
+      bloodPressure: bloodPressure.value,
+      pulseRate: pulseRate.value,
+      temperature: temperature.value
+    },
+    symptoms: symptoms.value,
+    painAreas: painAreas.value,
+    reproductiveHealth: reproductiveHealth.value,
+    mentalHealth: {
+      stress: stressLevel.value,
+      depression: depressionLevel.value,
+      anxiety: anxietyLevel.value
+    }
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/${patientId}/step4`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ step4 })
+    });
+
+    if (!res.ok) throw new Error("Failed to save step4");
+
+    location.href = "consult6.html";
+  } catch (err) {
+    alert(translations[localStorage.getItem("language") || "en"].err_server);
+    console.error(err);
+  }
+};
+
+prevBtn.onclick = () => location.href = "consult3.html";
+</script>
+</body>
+</html>
